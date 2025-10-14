@@ -9,7 +9,7 @@ export const siteMetadata: Metadata = {
     'Amor Fati — a human potential and peak performance company helping people create lives worth reliving.',
   openGraph: {
     siteName: 'Amor Fati',
-    images: [{ url: '/logo.png' }],
+    images: [{ url: '/favicon.png' }],
     locale: 'en_US',
     type: 'website',
   },

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   ...siteMetadata,
   title: 'Offerings',
   description:
-    'Explore Amor Fati programs — The 11 Letters Book, 21-Day Brain Rewiring Audio Experience, and Realign Vision Board Retreat — designed to unlock peak alignment.',
+    'Explore Amor Fati programs — The 11 Letters i wrote but never sent, 21-Day Brain Rewiring Audio Experience, and Realign Vision Board Retreat — designed to unlock peak alignment.',
 };
 
 export default function OfferingsPage() {
@@ -50,7 +50,7 @@ export default function OfferingsPage() {
             {[
               {
                 icon: Book,
-                title: 'The 11 Letters Book',
+                title: 'The 11 Letters i wrote but never sent',
                 description:
                   'A collection of profound letters exploring mindset, belief, and the art of creating a life worth reliving. Each letter is a portal to deeper self-understanding.',
                 cta: 'Get the Book',

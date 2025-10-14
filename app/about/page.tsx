@@ -30,7 +30,7 @@ export default function AboutPage() {
             <h2 className='font-serif text-3xl md:text-4xl font-bold'>The Story</h2>
             <div className='prose prose-lg max-w-none space-y-4 text-muted-foreground leading-relaxed'>
               <p>
-                Amor Fati — a Latin phrase meaning "love of fate" — represents the profound
+                Amor Fati is a Latin phrase meaning "love of fate". It represents the profound
                 acceptance and embrace of everything that happens in life, both good and
                 challenging.
               </p>
@@ -55,7 +55,7 @@ export default function AboutPage() {
           <div className='grid md:grid-cols-2 gap-12 items-center'>
             <div className='relative aspect-[3/4] bg-muted rounded-lg overflow-hidden'>
               <img
-                src='/professional-portrait-of-confident-coach-sheriff-m.jpg'
+                src='/moh-sheriff.jpeg'
                 alt='Sheriff Muhammad'
                 className='w-full h-full object-cover'
               />
@@ -74,9 +74,9 @@ export default function AboutPage() {
                   organizations achieve breakthrough results.
                 </p>
                 <p>
-                  His approach is grounded in the belief that confidence is not built — it's
-                  uncovered. That clarity is not found — it's created. And that the life you want is
-                  not out there — it's within you, waiting to be realized.
+                  His approach is grounded in the belief that confidence is not built, it's
+                  uncovered. That clarity is not found, it's created. And that the life you want is
+                  not out there, it's within you, waiting to be realized.
                 </p>
               </div>
             </div>
