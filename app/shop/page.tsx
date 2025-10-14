@@ -2,35 +2,18 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { siteMetadata } from '@/lib/metadata';
+import { Metadata } from 'next';
+import { products } from '@/lib/data';
+
+export const metadata: Metadata = {
+  ...siteMetadata,
+  title: 'Shop',
+  description:
+    'Shop Amor Fati tools for mental mastery — The 11 Letters Book and the 21-Day Brain Rewiring Audio Experience — designed for transformation.',
+};
 
 export default function ShopPage() {
-  const products = [
-    {
-      id: 1,
-      name: '(HARD COPY) 11 Letters I Wrote, but never sent',
-      description: `A hard copy of my book, 11 Letters I Wrote, but never sent: Don't pick be both RICH and HAPPY - Screw the OR.`,
-      price: '₦11,500',
-      image: '/11-letters-i-wrote-hard-copy.jpeg',
-      link: 'https://selar.com/11LETTERSBOOK',
-    },
-    {
-      id: 2,
-      name: '(PDF E-BOOK) 11 Letters I Wrote, but never sent',
-      description: `A soft copy of my book, 11 Letters I Wrote, but never sent: Don't pick be both RICH and HAPPY - Screw the OR.`,
-      price: '₦7,500',
-      image: '/11-letters-i-wrote-soft-copy.jpeg',
-      link: 'https://selar.com/11letterspdf',
-    },
-    {
-      id: 3,
-      name: '(Pre Order) The Overconfidence 101 Masterclass',
-      description:
-        'A pre-order for my Masterclass, The Overconfidence 101. The expected release date is Dec 2, 2025 4:00 AM',
-      price: '₦20,000',
-      image: '/overconfidence-101.jpg',
-    },
-  ];
-
   return (
     <main className='min-h-screen pt-20'>
       {/* Hero Section */}

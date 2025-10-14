@@ -23,7 +23,6 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Amor Fati | Create a life worth reliving',
   description: 'We help you realign your mind for peak performance and personal evolution.',
-  generator: 'v0.app',
   icons: {
     icon: '/logo.png',
   },

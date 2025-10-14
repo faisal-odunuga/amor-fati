@@ -8,22 +8,13 @@ import { Label } from '@/components/ui/label';
 import { Send } from 'lucide-react';
 import { contactMethods, faq, formFields } from '@/lib/data';
 import { getContactHref } from '@/lib/utils';
+import { siteMetadata } from '@/lib/metadata';
 
-// ✅ SEO Metadata
 export const metadata: Metadata = {
-  title: 'Contact | Amor Fati',
+  ...siteMetadata,
+  title: 'Contact',
   description:
-    'Get in touch with Amor Fati. Connect with Sheriff Muhammad for coaching, masterclasses, or collaborations on mindset, manifestation, and peak performance.',
-  openGraph: {
-    title: 'Contact Amor Fati',
-    description:
-      'Start your transformation with Amor Fati — mindset, manifestation, and high performance coaching.',
-    url: 'https://amorfati.com/contact',
-    siteName: 'Amor Fati',
-    images: [{ url: '/og-image.jpg', width: 1200, height: 630 }],
-    locale: 'en_US',
-    type: 'website',
-  },
+    'Connect with Amor Fati and Sheriff Muhammad for collaborations, coaching, or speaking engagements. Let’s create something worth reliving.',
 };
 
 export default function ContactPage() {

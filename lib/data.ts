@@ -90,3 +90,57 @@ export const formFields = [
     rows: 6,
   },
 ];
+
+export const products = [
+  {
+    id: 1,
+    name: '(HARD COPY) 11 Letters I Wrote, but never sent',
+    description: `A hard copy of my book, 11 Letters I Wrote, but never sent: Don't pick be both RICH and HAPPY - Screw the OR.`,
+    price: '₦11,500',
+    image: '/11-letters-i-wrote-hard-copy.jpeg',
+    link: 'https://selar.com/11LETTERSBOOK',
+  },
+  {
+    id: 2,
+    name: '(PDF E-BOOK) 11 Letters I Wrote, but never sent',
+    description: `A soft copy of my book, 11 Letters I Wrote, but never sent: Don't pick be both RICH and HAPPY - Screw the OR.`,
+    price: '₦7,500',
+    image: '/11-letters-i-wrote-soft-copy.jpeg',
+    link: 'https://selar.com/11letterspdf',
+  },
+  {
+    id: 3,
+    name: '(Pre Order) The Overconfidence 101 Masterclass',
+    description:
+      'A pre-order for my Masterclass, The Overconfidence 101. The expected release date is Dec 2, 2025 4:00 AM',
+    price: '₦65,000',
+    image: '/overconfidence-101.jpg',
+  },
+];
+
+export const articles = [
+  {
+    title: 'The Art of Loving Your Fate',
+    excerpt:
+      "Amor Fati isn't about passive acceptance. It's about active engagement with reality and finding power in every circumstance.",
+    date: 'March 15, 2024',
+    readTime: '5 min read',
+    slug: 'art-of-loving-your-fate',
+  },
+  {
+    title: 'Why Overconfidence is Underrated',
+    excerpt:
+      'Society tells us to be humble. But what if a little overconfidence is exactly what you need to break through your limitations?',
+    date: 'March 8, 2024',
+    readTime: '7 min read',
+    slug: 'overconfidence-underrated',
+  },
+  {
+    title: 'Creating a Life Worth Reliving',
+    excerpt:
+      "If you could relive your life exactly as it is, would you? This thought experiment reveals everything about how you're living now.",
+    date: 'March 1, 2024',
+    readTime: '6 min read',
+    slug: 'life-worth-reliving',
+  },
+];
