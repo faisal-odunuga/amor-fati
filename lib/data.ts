@@ -108,14 +108,6 @@ export const freeResources = [
     image: '/11-letters-i-wrote-soft-copy.jpeg',
     link: 'https://selar.com/11letterspdf',
   },
-  {
-    id: 3,
-    name: '(Pre Order) The Overconfidence 101 Masterclass',
-    description:
-      'A pre-order for my Masterclass, The Overconfidence 101. The expected release date is Dec 2, 2025 4:00 AM',
-    price: '₦65,000',
-    image: '/overconfidence-101.jpg',
-  },
 ];
 
 export const articles = [
