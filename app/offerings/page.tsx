@@ -1,16 +1,19 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Book, Headphones, Users, Sparkles } from 'lucide-react';
-import Link from 'next/link';
-import { siteMetadata } from '@/lib/metadata';
-import { Metadata } from 'next';
+'use client';
 
-export const metadata: Metadata = {
-  ...siteMetadata,
-  title: 'Offerings',
-  description:
-    'Explore Amor Fati programs — The 11 Letters i wrote but never sent, 21-Day Brain Rewiring Audio Experience, and Realign Vision Board Retreat — designed to unlock peak alignment.',
-};
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Download, Video, GraduationCap } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { courses, freeResources } from '@/lib/data';
+import InstagramEmbed from '@/components/sections/Instagram';
+import TikTokEmbed from '@/components/sections/Tiktok';
 
 export default function OfferingsPage() {
   return (
@@ -18,176 +21,194 @@ export default function OfferingsPage() {
       {/* Hero Section */}
       <section className='py-24 px-6'>
         <div className='max-w-4xl mx-auto text-center space-y-6'>
-          <h1 className='font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-balance'>
-            Our Offerings
-          </h1>
-          <p className='text-xl text-muted-foreground leading-relaxed'>
-            Tools for mental mastery. These are not products — they're portals.
-          </p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className='font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-balance'
+          >
+            Transform Your Reality
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className='text-xl text-muted-foreground leading-relaxed'
+          >
+            Resources, courses, and experiences designed to unlock your highest potential.
+          </motion.p>
         </div>
       </section>
 
-      {/* Tagline */}
-      <section className='py-12 px-6 bg-secondary/30'>
-        <div className='max-w-3xl mx-auto text-center'>
-          <p className='font-serif text-2xl md:text-3xl font-light text-balance'>
-            Shift your frequency. Shape your future.
-          </p>
+      {/* Daily Wisdom - Social Media Content */}
+      <section className='py-24 px-6 bg-secondary/30'>
+        <div className='max-w-6xl mx-auto space-y-12'>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className='space-y-4 text-center'
+          >
+            <div className='flex items-center justify-center gap-3'>
+              <Video className='h-8 w-8 text-accent' />
+              <h2 className='font-serif text-3xl md:text-4xl font-bold'>Daily Wisdom</h2>
+            </div>
+            <p className='text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto'>
+              Insights on mindset, philosophy, and personal growth. Shared freely, daily.
+            </p>
+          </motion.div>
+
+          <div className='grid md:grid-cols-2 gap-8'>
+            {/* TikTok Embed */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className='space-y-4'
+            >
+              <h3 className='font-serif text-2xl font-bold text-center'>TikTok</h3>
+              <div className='bg-muted rounded-lg overflow-hidden border border-border'>
+                <div className='w-full h-full flex items-center justify-center text-muted-foreground'>
+                  <TikTokEmbed />
+                </div>
+              </div>
+
+            
+            </motion.div>
+
+            {/* Instagram Embed */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className='space-y-4'
+            >
+              <h3 className='font-serif text-2xl font-bold text-center'>Instagram</h3>
+              <div className=' bg-muted rounded-lg overflow-hidden border border-border'>
+                <div className='w-full h-full flex items-center justify-center text-muted-foreground'>
+                  <InstagramEmbed />
+                </div>
+              </div>
+            
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* For Individuals */}
+      {/* Starter Pack - Ordered by Price */}
       <section className='py-24 px-6'>
         <div className='max-w-6xl mx-auto space-y-12'>
-          <div className='space-y-4'>
-            <h2 className='font-serif text-3xl md:text-4xl font-bold'>For Individuals</h2>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className='space-y-4'
+          >
+            <div className='flex items-center gap-3'>
+              <Download className='h-8 w-8 text-accent' />
+              <h2 className='font-serif text-3xl md:text-4xl font-bold'>Starter Pack</h2>
+            </div>
             <p className='text-lg text-muted-foreground leading-relaxed'>
-              Personal transformation tools designed for deep inner work.
+              Tools to support your journey. Each designed with intention and care.
             </p>
-          </div>
+          </motion.div>
 
-          <div className='grid md:grid-cols-3 gap-8'>
-            {[
-              {
-                icon: Book,
-                title: 'The 11 Letters i wrote but never sent',
-                description:
-                  'A collection of profound letters exploring mindset, belief, and the art of creating a life worth reliving. Each letter is a portal to deeper self-understanding.',
-                cta: 'Get the Book',
-                href: '/shop',
-              },
-              {
-                icon: Headphones,
-                title: '21-Day Brain Rewiring Audio Experience',
-                description:
-                  'A transformative audio journey designed to reprogram limiting beliefs and install empowering mental patterns. Daily sessions for 21 days of deep mental realignment.',
-                cta: 'Start Your Journey',
-                href: '/shop',
-              },
-              {
-                icon: Sparkles,
-                title: 'Realign Vision Board Retreat',
-                description:
-                  "An immersive experience at Ziba Beach where you'll clarify your vision, realign your energy, and create a powerful visual representation of your future self.",
-                cta: 'Join the Retreat',
-                href: '/events',
-              },
-            ].map((offering) => (
-              <Card
-                key={offering.title}
-                className='border-border hover:border-accent transition-colors'
+          <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-6'>
+            {freeResources.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <CardHeader>
-                  <div className='w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-4'>
-                    <offering.icon className='h-6 w-6 text-accent' />
+                <Card className='border-border overflow-hidden group h-full'>
+                  <div className='relative aspect-square bg-muted overflow-hidden'>
+                    <img
+                      src={product.image || '/placeholder.svg'}
+                      alt={product.name}
+                      className='w-full h-full object-cover transition-transform duration-300 group-hover:scale-105'
+                    />
                   </div>
-                  <CardTitle className='font-serif text-2xl'>{offering.title}</CardTitle>
-                </CardHeader>
-                <CardContent className='space-y-4'>
-                  <CardDescription className='text-muted-foreground leading-relaxed'>
-                    {offering.description}
-                  </CardDescription>
-                  <Button asChild variant='outline' className='w-full bg-transparent'>
-                    <Link href={offering.href}>
-                      {offering.cta}
-                      <ArrowRight className='ml-2 h-4 w-4' />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
+                  <CardHeader>
+                    <CardTitle className='font-serif text-xl'>{product.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className='text-sm text-muted-foreground leading-relaxed'>
+                      {product.description}
+                    </p>
+                  </CardContent>
+                  <CardFooter className='flex items-center justify-between'>
+                    <span className='text-xl font-bold text-accent'>{product.price}</span>
+                    <Button
+                      size='sm'
+                      className='bg-accent hover:bg-accent/90 text-accent-foreground'
+                    >
+                      Get Now
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* For Teams & Schools */}
+      {/* Academy Section */}
       <section className='py-24 px-6 bg-secondary/30'>
         <div className='max-w-6xl mx-auto space-y-12'>
-          <div className='space-y-4'>
-            <h2 className='font-serif text-3xl md:text-4xl font-bold'>For Teams & Schools</h2>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className='space-y-4'
+          >
+            <div className='flex items-center gap-3'>
+              <GraduationCap className='h-8 w-8 text-accent' />
+              <h2 className='font-serif text-3xl md:text-4xl font-bold'>The Academy</h2>
+            </div>
             <p className='text-lg text-muted-foreground leading-relaxed'>
-              Transformative experiences for organizations and educational institutions.
+              Structured learning for lasting change. Lifetime access to all materials.
             </p>
-          </div>
+          </motion.div>
 
-          <Card className='border-border'>
-            <CardHeader>
-              <div className='flex items-start gap-6'>
-                <div className='w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0'>
-                  <Users className='h-8 w-8 text-accent' />
-                </div>
-                <div className='space-y-2'>
-                  <CardTitle className='font-serif text-3xl'>
-                    Overconfidence 101 Masterclass
-                  </CardTitle>
-                  <CardDescription className='text-lg'>
-                    90-minute peak performance session
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className='space-y-6'>
-              <p className='text-muted-foreground leading-relaxed'>
-                A high-energy, transformative masterclass designed to unlock unshakeable confidence
-                in your team or students. Through interactive exercises, powerful frameworks, and
-                real-world applications, participants learn to:
-              </p>
-              <ul className='space-y-2 text-muted-foreground'>
-                <li className='flex items-start gap-2'>
-                  <span className='text-accent mt-1'>•</span>
-                  <span>Identify and eliminate limiting beliefs that hold them back</span>
-                </li>
-                <li className='flex items-start gap-2'>
-                  <span className='text-accent mt-1'>•</span>
-                  <span>Build authentic confidence rooted in self-knowledge</span>
-                </li>
-                <li className='flex items-start gap-2'>
-                  <span className='text-accent mt-1'>•</span>
-                  <span>Develop mental resilience for high-pressure situations</span>
-                </li>
-                <li className='flex items-start gap-2'>
-                  <span className='text-accent mt-1'>•</span>
-                  <span>Create actionable plans for immediate implementation</span>
-                </li>
-              </ul>
-              <div className='pt-4'>
-                <Button
-                  asChild
-                  size='lg'
-                  className='bg-accent hover:bg-accent/90 text-accent-foreground'
-                >
-                  <Link href='/contact'>
-                    Book a Masterclass
-                    <ArrowRight className='ml-2 h-4 w-4' />
-                  </Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className='py-24 px-6'>
-        <div className='max-w-3xl mx-auto text-center space-y-6'>
-          <h2 className='font-serif text-3xl md:text-4xl font-bold'>Ready to transform?</h2>
-          <p className='text-lg text-muted-foreground leading-relaxed'>
-            Choose the path that resonates with where you are and where you want to go.
-          </p>
-          <div className='flex flex-col sm:flex-row gap-4 justify-center pt-6'>
-            <Button
-              asChild
-              size='lg'
-              className='bg-primary hover:bg-primary/90 text-primary-foreground'
-            >
-              <Link href='/shop'>
-                Browse Products
-                <ArrowRight className='ml-2 h-4 w-4' />
-              </Link>
-            </Button>
-            <Button asChild size='lg' variant='outline'>
-              <Link href='/contact'>Get in Touch</Link>
-            </Button>
+          <div className='grid md:grid-cols-2 gap-8'>
+            {courses.map((course, index) => (
+              <motion.div
+                key={course.title}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+              >
+                <Card className='border-border h-full hover:border-accent transition-colors'>
+                  <CardHeader>
+                    <div
+                      className={`w-16 h-16 rounded-full ${course.color} flex items-center justify-center mb-4`}
+                    >
+                      <course.icon className='h-8 w-8' />
+                    </div>
+                    <CardTitle className='font-serif text-2xl'>{course.title}</CardTitle>
+                    <CardDescription className='text-base'>{course.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className='space-y-4'>
+                    <div className='flex gap-4 text-sm text-muted-foreground'>
+                      <span>⏱️ {course.duration}</span>
+                      <span>📚 {course.modules}</span>
+                    </div>
+                    <Button className='w-full bg-accent hover:bg-accent/90 text-accent-foreground'>
+                      Enroll Now
+                      <ArrowRight className='ml-2 h-4 w-4' />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

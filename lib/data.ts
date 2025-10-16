@@ -1,4 +1,4 @@
-import { Instagram, Linkedin, Mail, Phone } from 'lucide-react';
+import { GraduationCap, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
 
 export const faq = [
   {
@@ -91,7 +91,7 @@ export const formFields = [
   },
 ];
 
-export const products = [
+export const freeResources = [
   {
     id: 1,
     name: '(HARD COPY) 11 Letters I Wrote, but never sent',
@@ -142,5 +142,53 @@ export const articles = [
     date: 'March 1, 2024',
     readTime: '6 min read',
     slug: 'life-worth-reliving',
+  },
+];
+
+export const testimonials = [
+  {
+    id: 1,
+    name: 'Sarah Johnson',
+    image: '/images/sarah.jpg',
+    title: 'Creative Coach',
+    quote:
+      'The 11 Letters completely changed how I approach my thoughts. It’s like I rewired my mindset from within.',
+  },
+  {
+    id: 2,
+    name: 'Daniel Adeyemi',
+    image: '/images/daniel.jpg',
+    title: 'Entrepreneur',
+    quote:
+      'The 21-Day Audio Experience grounded me mentally and helped me handle challenges with clarity and calm.',
+  },
+  {
+    id: 3,
+    name: 'Amara O.',
+    image: '/images/amara.jpg',
+    title: 'Writer',
+    quote:
+      'Every session felt like peeling off a mental layer. It’s deep, practical, and beautifully structured.',
+  },
+];
+
+export const courses = [
+  {
+    title: 'Overconfidence 101',
+    description:
+      'Master the art of unshakeable confidence. Learn to eliminate limiting beliefs and build authentic self-assurance.',
+    duration: '6 weeks',
+    modules: '12 modules',
+    icon: GraduationCap,
+    color: 'bg-accent/10 text-accent',
+  },
+  {
+    title: 'Mental Mastery Blueprint',
+    description:
+      'Transform your mindset and unlock peak performance. A comprehensive course on mental resilience and clarity.',
+    duration: '8 weeks',
+    modules: '16 modules',
+    icon: GraduationCap,
+    color: 'bg-primary/10 text-primary',
   },
 ];
