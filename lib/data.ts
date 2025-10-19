@@ -95,7 +95,7 @@ export const freeResources = [
   {
     id: 1,
     name: '(HARD COPY) 11 Letters I Wrote, but never sent',
-    description: `A hard copy of my book, 11 Letters I Wrote, but never sent: Don't pick be both RICH and HAPPY - Screw the OR.`,
+    description: `A hard copy of my book, 11 Letters I Wrote, but never sent: Don't pick — be both RICH and HAPPY. Screw the OR.`,
     price: '₦11,500',
     image: '/11-letters-i-wrote-hard-copy.jpeg',
     link: 'https://selar.com/11LETTERSBOOK',
@@ -103,10 +103,26 @@ export const freeResources = [
   {
     id: 2,
     name: '(PDF E-BOOK) 11 Letters I Wrote, but never sent',
-    description: `A soft copy of my book, 11 Letters I Wrote, but never sent: Don't pick be both RICH and HAPPY - Screw the OR.`,
+    description: `A soft copy of my book, 11 Letters I Wrote, but never sent: Don't pick — be both RICH and HAPPY. Screw the OR.`,
     price: '₦7,500',
     image: '/11-letters-i-wrote-soft-copy.jpeg',
     link: 'https://selar.com/11letterspdf',
+  },
+  {
+    id: 3,
+    name: '11 Letters Book Club',
+    description: `Join the 11 Letters Book Club, a community built around growth, deep conversations, and actionable wisdom inspired by the book.`,
+    price: 'Free',
+    image: '/bookclub.png', // add this image to /public
+    link: 'https://nestuge.com/11lettersbookclub',
+  },
+  {
+    id: 4,
+    name: 'Moh’s Substack',
+    description: `Weekly reflections, lessons, and thought-provoking insights — straight to your inbox. Stay connected and inspired.`,
+    price: 'Free',
+    image: '/substack.png', // add a simple email/envelope-themed image to /public
+    link: 'https://tinyurl.com/2s3t2kws', // your newsletter link
   },
 ];
 
@@ -141,7 +157,7 @@ export const testimonials = [
   {
     id: 1,
     name: 'Sarah Johnson',
-    image: '/images/sarah.jpg',
+    image: '/substack.png',
     title: 'Creative Coach',
     quote:
       'The 11 Letters completely changed how I approach my thoughts. It’s like I rewired my mindset from within.',
@@ -149,7 +165,7 @@ export const testimonials = [
   {
     id: 2,
     name: 'Daniel Adeyemi',
-    image: '/images/daniel.jpg',
+    image: '/substack.png',
     title: 'Entrepreneur',
     quote:
       'The 21-Day Audio Experience grounded me mentally and helped me handle challenges with clarity and calm.',
@@ -157,7 +173,7 @@ export const testimonials = [
   {
     id: 3,
     name: 'Amara O.',
-    image: '/images/amara.jpg',
+    image: '/substack.png',
     title: 'Writer',
     quote:
       'Every session felt like peeling off a mental layer. It’s deep, practical, and beautifully structured.',
@@ -169,10 +185,11 @@ export const courses = [
     title: 'Overconfidence 101',
     description:
       'Master the art of unshakeable confidence. Learn to eliminate limiting beliefs and build authentic self-assurance.',
-    duration: '6 weeks',
+    duration: '21 days',
     modules: '12 modules',
     icon: GraduationCap,
     color: 'bg-accent/10 text-accent',
+    link: 'https://selar.com/5216cx2266',
   },
   {
     title: 'Mental Mastery Blueprint',
@@ -182,5 +199,6 @@ export const courses = [
     modules: '16 modules',
     icon: GraduationCap,
     color: 'bg-primary/10 text-primary',
+    link: '',
   },
 ];

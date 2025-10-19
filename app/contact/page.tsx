@@ -9,6 +9,12 @@ import { Send } from 'lucide-react';
 import { contactMethods, faq, formFields } from '@/lib/data';
 import { getContactHref } from '@/lib/utils';
 import { siteMetadata } from '@/lib/metadata';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '@/components/ui/accordion';
 
 export const metadata: Metadata = {
   ...siteMetadata,
@@ -125,23 +131,26 @@ export default function ContactPage() {
       <section className='py-24 px-6 bg-secondary/30'>
         <div className='max-w-4xl mx-auto space-y-12'>
           <h2 className='font-serif text-3xl md:text-4xl font-bold text-center'>
-            Common Questions
+            Frequently Asked Questions
           </h2>
 
           <div className='space-y-6'>
-            {faq.map((faq) => (
-              <Card
-                key={faq.question}
-                className='border-border transition-transform hover:scale-[1.01]'
-              >
-                <CardHeader>
-                  <CardTitle className='text-xl font-semibold'>{faq.question}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className='text-muted-foreground leading-relaxed'>{faq.answer}</p>
-                </CardContent>
-              </Card>
-            ))}
+            <Accordion type='single' collapsible className='w-full' defaultValue='item-1'>
+              {faq.map((faq, i) => (
+                <AccordionItem
+                  key={faq.question}
+                  value={`item-${i}`}
+                  className='transition-transform hover:scale-[1.01]'
+                >
+                  <AccordionTrigger className='text-xl font-semibold'>
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className='flex flex-col gap-4 text-balance'>
+                    <p>{faq.answer}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </section>

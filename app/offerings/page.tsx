@@ -1,5 +1,4 @@
 'use client';
-
 import {
   Card,
   CardContent,
@@ -74,8 +73,6 @@ export default function OfferingsPage() {
                   <TikTokEmbed />
                 </div>
               </div>
-
-            
             </motion.div>
 
             {/* Instagram Embed */}
@@ -92,7 +89,6 @@ export default function OfferingsPage() {
                   <InstagramEmbed />
                 </div>
               </div>
-            
             </motion.div>
           </div>
         </div>
@@ -126,7 +122,7 @@ export default function OfferingsPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card className='border-border overflow-hidden group h-full'>
+                <Card className='border-border overflow-hidden group'>
                   <div className='relative aspect-square bg-muted overflow-hidden'>
                     <img
                       src={product.image || '/placeholder.svg'}
@@ -144,12 +140,14 @@ export default function OfferingsPage() {
                   </CardContent>
                   <CardFooter className='flex items-center justify-between'>
                     <span className='text-xl font-bold text-accent'>{product.price}</span>
-                    <Button
-                      size='sm'
-                      className='bg-accent hover:bg-accent/90 text-accent-foreground'
-                    >
-                      Get Now
-                    </Button>
+                    <a href={product.link} target='_blank' rel='noopener noreferrer'>
+                      <Button
+                        size='sm'
+                        className='bg-accent hover:bg-accent/90 text-accent-foreground'
+                      >
+                        Get Now
+                      </Button>
+                    </a>
                   </CardFooter>
                 </Card>
               </motion.div>
@@ -201,10 +199,13 @@ export default function OfferingsPage() {
                       <span>⏱️ {course.duration}</span>
                       <span>📚 {course.modules}</span>
                     </div>
-                    <Button className='w-full bg-accent hover:bg-accent/90 text-accent-foreground'>
-                      Enroll Now
-                      <ArrowRight className='ml-2 h-4 w-4' />
-                    </Button>
+
+                    <a href={course.link} target='_blank' rel='noopener noreferrer'>
+                      <Button className='w-full bg-accent hover:bg-accent/90 text-accent-foreground'>
+                        Enroll Now
+                        <ArrowRight className='ml-2 h-4 w-4' />
+                      </Button>
+                    </a>
                   </CardContent>
                 </Card>
               </motion.div>
