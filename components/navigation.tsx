@@ -15,7 +15,6 @@ export function Navigation() {
     { href: '/offerings', label: 'Offerings' },
     { href: '/philosophy', label: 'Philosophy' },
     { href: '/events', label: 'Events' },
-    { href: '/testimonials', label: 'Testimonials' },
     { href: '/journal', label: 'Journal' },
     { href: '/contact', label: 'Contact' },
   ];

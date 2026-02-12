@@ -1,45 +1,58 @@
 import React from 'react';
 import { Button } from '../../ui/button';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 
 const Hero = () => {
   return (
-    <section className='relative h-screen flex items-center justify-center overflow-hidden'>
+    <section className='relative h-screen flex items-center overflow-hidden bg-background'>
+      {/* Background Image */}
       <div className='absolute inset-0 z-0'>
         <img
-          src='/cinematic-nature-scene-with-person-in-meditation-o.jpg'
-          alt='Hero background'
+          src='/images/fire.jpg'
+          alt='High performance professional'
           className='w-full h-full object-cover opacity-40'
         />
-        <div className='absolute inset-0 bg-gradient-to-b from-background/50 via-background/30 to-background' />
+        <div className='absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent' />
       </div>
 
-      <div className='relative z-10 max-w-4xl mx-auto px-6 text-center space-y-8'>
-        <h1 className='font-serif text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-balance animate-in fade-in slide-in-from-bottom-4 duration-1000'>
-          Create a life worth reliving
-        </h1>
-        <p className='text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200'>
-          Where mindset meets manifestation. Realign your mind for peak performance and personal
-          evolution.
-        </p>
-        <div className='flex flex-col sm:flex-row gap-4 justify-center pt-4 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-500'>
-          <Button asChild size='lg' className='bg-accent hover:bg-accent/90 text-accent-foreground'>
-            <Link href='/philosophy'>
-              Discover Our Philosophy
-              <ArrowRight className='ml-2 h-4 w-4' />
-            </Link>
-          </Button>
-          <Button asChild size='lg' variant='outline'>
-            <Link href='/contact'>Start Your Journey</Link>
-          </Button>
+      <div className='relative z-10 max-w-7xl mx-auto px-6 pt-20 w-full'>
+        <div className='max-w-3xl animate-in fade-in slide-in-from-bottom-8 duration-1000'>
+          <span className='text-primary font-bold tracking-[0.3em] uppercase mb-4 block'>
+            Redefining Potential
+          </span>
+          <h1 className='text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-foreground mb-8 leading-tight'>
+            Mastery of the <br /> <span className='italic text-primary'>Unconquerable</span> Mind.
+          </h1>
+          <p className='text-lg md:text-xl text-muted-foreground mb-10 max-w-xl leading-relaxed'>
+            A premium ecosystem for those who demand more. We don't just coach performance; we
+            architect legacies through the lens of modern stoicism.
+          </p>
+          <div className='flex flex-wrap gap-6'>
+            <Button
+              asChild
+              size='lg'
+              className='bg-primary text-primary-foreground px-10 py-6 h-auto text-sm font-bold uppercase tracking-widest hover:scale-105 transition-transform rounded-none'
+            >
+              <Link href='/offerings'>Explore Programs</Link>
+            </Button>
+            <Button
+              asChild
+              variant='outline'
+              size='lg'
+              className='border-primary/30 text-foreground px-10 py-6 h-auto text-sm font-bold uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-all rounded-none'
+            >
+              <Link href='/philosophy'>
+                Watch Manifesto <Play className='ml-2 w-4 h-4' />
+              </Link>
+            </Button>
+          </div>
         </div>
       </div>
 
-      <div className='absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce'>
-        <div className='w-6 h-10 border-2 border-foreground/30 rounded-full flex items-start justify-center p-2'>
-          <div className='w-1 h-3 bg-foreground/30 rounded-full' />
-        </div>
+      <div className='absolute bottom-12 right-12 hidden lg:flex items-center gap-4 text-muted-foreground text-xs tracking-widest uppercase animate-in fade-in duration-1000 delay-500'>
+        <span>Scroll to explore</span>
+        <div className='w-px h-12 bg-primary/50' />
       </div>
     </section>
   );

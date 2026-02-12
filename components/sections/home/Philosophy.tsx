@@ -1,44 +1,70 @@
-import { ArrowRight, Compass } from 'lucide-react';
+import { ArrowRight, CheckCircle } from 'lucide-react';
 import React from 'react';
 import { Button } from '../../ui/button';
 import Link from 'next/link';
 
 const Philosophy = () => {
   return (
-    <section className='py-32 px-6'>
-      <div className='max-w-7xl mx-auto'>
-        <div className='grid md:grid-cols-2 gap-12 items-center'>
-          <div className='relative h-[500px] rounded-2xl overflow-hidden group'>
+    <section className='py-32 px-6 bg-background'>
+      <div className='max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center'>
+        <div className='relative'>
+          <div className='aspect-[4/5] bg-muted overflow-hidden'>
             <img
-              src='/person-journaling-at-sunrise-peaceful-moment.jpg'
-              alt='Philosophy'
-              className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-105'
+              src='/images/statue.png'
+              className='w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 opacity-90'
             />
-            <div className='absolute inset-0 bg-gradient-to-t from-background/80 to-transparent' />
           </div>
-          <div className='space-y-6'>
-            <div className='inline-flex items-center gap-2 text-accent font-medium'>
-              <Compass className='h-5 w-5' />
-              <span>Philosophy</span>
-            </div>
-            <h2 className='font-serif text-4xl md:text-5xl font-bold text-balance'>
-              Believe. Begin. Breakthrough. Become.
-            </h2>
-            <p className='text-lg text-muted-foreground leading-relaxed'>
-              A proven framework for transformation. Four stages that shift how you think, act, and
-              show up.
-            </p>
-            <Button
-              asChild
-              size='lg'
-              className='bg-primary hover:bg-primary/90 text-primary-foreground group'
-            >
-              <Link href='/philosophy'>
-                Explore the Framework
-                <ArrowRight className='ml-2 h-4 w-4 transition-transform group-hover:translate-x-1' />
-              </Link>
-            </Button>
-          </div>
+          <div className='absolute -bottom-8 -right-8 w-64 h-64 border border-primary/20 -z-10' />
+        </div>
+
+        <div>
+          <h2 className='text-sm font-bold tracking-[0.4em] uppercase text-primary mb-6'>
+            The Core Philosophy
+          </h2>
+          <h3 className='text-5xl font-serif font-bold mb-8 text-foreground'>
+            Amor Fati: <br />
+            <span className='text-muted-foreground italic font-normal'>Love of Fate.</span>
+          </h3>
+          <p className='text-lg text-muted-foreground mb-10 leading-relaxed'>
+            True power is not found in controlling the external world, but in the radical acceptance
+            and mastery of one's internal landscape. We teach you to thrive within chaos, not just
+            survive it.
+          </p>
+          <ul className='space-y-8'>
+            <li className='flex items-start gap-4'>
+              <CheckCircle className='w-6 h-6 text-primary mt-1 shrink-0' />
+              <div>
+                <h4 className='font-bold uppercase tracking-wider mb-2 text-foreground'>
+                  Radical Ownership
+                </h4>
+                <p className='text-muted-foreground text-sm'>
+                  Every outcome is a reflection of internal alignment. To blame is to forfeit power.
+                </p>
+              </div>
+            </li>
+            <li className='flex items-start gap-4'>
+              <CheckCircle className='w-6 h-6 text-primary mt-1 shrink-0' />
+              <div>
+                <h4 className='font-bold uppercase tracking-wider mb-2 text-foreground'>
+                  Strategic Silence
+                </h4>
+                <p className='text-muted-foreground text-sm'>
+                  Finding clarity in a world designed for distraction. stillness is the ultimate
+                  weapon.
+                </p>
+              </div>
+            </li>
+          </ul>
+          <Button
+            asChild
+            variant='link'
+            className='mt-12 text-primary font-bold uppercase tracking-widest p-0 h-auto hover:text-primary/80 group'
+          >
+            <Link href='/philosophy' className='flex items-center gap-2'>
+              Learn the Methodology
+              <ArrowRight className='w-4 h-4 group-hover:translate-x-2 transition-transform' />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>
