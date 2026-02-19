@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import { freeResources } from '@/lib/data';
 
-
 const Toolkit = () => {
   return (
     <section className='py-32 px-6'>

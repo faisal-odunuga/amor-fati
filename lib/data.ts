@@ -121,8 +121,8 @@ export const freeResources = [
     name: 'Moh’s Substack',
     description: `Weekly reflections, lessons, and thought-provoking insights — straight to your inbox. Stay connected and inspired.`,
     price: 'Free',
-    image: '/images/moh-sheriff.jpeg', 
-    link: 'https://tinyurl.com/2s3t2kws', 
+    image: '/images/moh-sheriff.jpeg',
+    link: 'https://tinyurl.com/2s3t2kws',
   },
 ];
 
@@ -157,8 +157,8 @@ export const testimonials = [
   {
     id: 1,
     name: 'Sarah Johnson',
-    image_1: '/images/moh-&-mum.jpg',
-    image_2: '/images/potrait-2.jpg',
+    image_1: 'https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456602/DL8A8591_mjfng7.jpg',
+    image_2: 'https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456626/DL8A8587_ajj3rq.jpg',
     title: 'Creative Coach',
     quote:
       'The 11 Letters completely changed how I approach my thoughts. It’s like I rewired my mindset from within.',
@@ -166,8 +166,8 @@ export const testimonials = [
   {
     id: 2,
     name: 'Daniel Adeyemi',
-    image_1: '/images/potrait-3.jpg',
-    image_2: '/images/potrait-4.jpg',
+    image_1: 'https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456603/DL8A8602_vpk09z.jpg',
+    image_2: 'https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456604/DL8A8604_dodldz.jpg',
     title: 'Entrepreneur',
     quote:
       'The 21-Day Audio Experience grounded me mentally and helped me handle challenges with clarity and calm.',
@@ -175,8 +175,8 @@ export const testimonials = [
   {
     id: 3,
     name: 'Amara O.',
-    image_1: '/images/potrait-5.jpg',
-    image_2: '/images/potrait-6.jpg',
+    image_1: 'https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456606/DL8A8614_gyq9ym.jpg',
+    image_2: 'https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456608/DL8A8615_xy1kks.jpg',
     title: 'Writer',
     quote:
       'Every session felt like peeling off a mental layer. It’s deep, practical, and beautifully structured.',
@@ -184,8 +184,8 @@ export const testimonials = [
   {
     id: 4,
     name: 'Amara O.',
-    image_1: '/images/potrait-7.jpg',
-    image_2: '/images/vb-sitting.jpg',
+    image_1: 'https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456625/DL8A8625_orzhon.jpg',
+    image_2: 'https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456601/DL8A8600_wu5js6.jpg',
     title: 'Writer',
     quote:
       'Every session felt like peeling off a mental layer. It’s deep, practical, and beautifully structured.',

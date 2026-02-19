@@ -5,24 +5,11 @@ const PhilosophyHero = () => {
   return (
     <section className='relative h-[80vh] flex items-center justify-center overflow-hidden'>
       <div className='absolute inset-0 z-0'>
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className='w-full h-full object-cover opacity-50 grayscale'
-        >
-          <source
-            src='https://res.cloudinary.com/dsvd234/video/upload/v1/ocean-waves-slow-motion'
-            type='video/mp4'
-          />
-          {/* Fallback image if video fails or while loading */}
-          <img
-            src='https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&q=80&w=2000'
-            alt='Ocean waves'
-            className='w-full h-full object-cover'
-          />
-        </video>
+        <img
+          src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456645/DL8A8651_h8y5om.jpg'
+          alt='Ocean waves'
+          className='w-full h-full object-cover'
+        />
         <div className='absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/30' />
       </div>
 

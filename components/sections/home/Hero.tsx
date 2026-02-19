@@ -9,7 +9,7 @@ const Hero = () => {
       {/* Background Image */}
       <div className='absolute inset-0 z-0'>
         <img
-          src='/images/fire.jpg'
+          src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771457803/JIO_6348_lzphmu.jpg'
           alt='High performance professional'
           className='w-full h-full object-cover opacity-40'
         />

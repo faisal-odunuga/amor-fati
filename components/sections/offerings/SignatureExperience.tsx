@@ -46,7 +46,7 @@ const SignatureExperience = () => {
               <div className='relative group'>
                 <div className='absolute -inset-1 bg-primary/30 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000' />
                 <img
-                  src='/images/vb-sitting.jpg'
+                  src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456600/DL8A8599_tiqmwb.jpg'
                   alt='Audience cheering at a live event'
                   className='relative rounded-none shadow-2xl object-cover h-[500px] w-full grayscale group-hover:grayscale-0 transition-all duration-700'
                 />

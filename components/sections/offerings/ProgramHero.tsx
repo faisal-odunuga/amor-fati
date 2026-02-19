@@ -7,7 +7,7 @@ const ProgramHero = () => {
     <section className='relative h-[70vh] flex items-center justify-center text-center text-white px-4 overflow-hidden'>
       <div className='absolute inset-0 z-0'>
         <img
-          src='/images/vb-1.jpg'
+          src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771457800/JIO_6313_haayda.jpg'
           alt='Hero background'
           className='w-full h-full object-cover opacity-60'
         />
