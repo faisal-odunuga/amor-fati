@@ -17,6 +17,7 @@ export function Navigation() {
     { href: '/events', label: 'Events' },
     // { href: '/journal', label: 'Journal' },
     { href: '/contact', label: 'Contact' },
+    { href: '/book-club', label: 'Book Club', variant: 'featured' as const },
   ];
 
   return (
@@ -31,7 +32,11 @@ export function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className='text-sm text-foreground/70 hover:text-foreground transition-colors'
+                className={
+                  link.variant === 'featured'
+                    ? 'text-sm font-semibold px-4 py-2 rounded-full border border-primary/30 bg-primary/10 text-primary hover:bg-primary/15 hover:border-primary/50 transition-colors'
+                    : 'text-sm text-foreground/70 hover:text-foreground transition-colors'
+                }
               >
                 {link.label}
               </Link>
@@ -58,7 +63,11 @@ export function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className='block text-foreground/70 hover:text-foreground transition-colors'
+                className={
+                  link.variant === 'featured'
+                    ? 'block rounded-lg border border-primary/30 bg-primary/10 px-4 py-3 font-semibold text-primary transition-colors'
+                    : 'block text-foreground/70 hover:text-foreground transition-colors'
+                }
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}

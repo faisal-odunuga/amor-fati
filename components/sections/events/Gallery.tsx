@@ -20,6 +20,9 @@ const Gallery = () => {
             alt='Latest Retreat Highlight'
             className='absolute inset-0 w-full h-full object-cover grayscale-[0.2] group-hover:scale-105 transition-transform duration-1000'
             src='https://lh3.googleusercontent.com/aida-public/AB6AXuBemcUQMKcNCrjisjHTUtNwB0z2dB7TIhzVgCmATNVswdvvF34zSq8C4w9NTD8hrncKZtadXJd_qXiqzwlbi2NTRwzEMLPgAXVFLgr7if3P_hMO0l6BJzUwYhybDN2HPH3SGaYJ0MaDhoXg1w5_Ew7HZnSfqmD-o7vNQkYm9jdNyZ0kIEOo2YBQ2PxoCWPwZ1tBKXA2Djv0HTQnlCQWsCNjNN3L8pvQqrTtrTFAQjLJCbLdxAf6E1hgJ__I1QkFeGJ_JZWmiewNPoyn'
+            loading='eager'
+            fetchPriority='high'
+            decoding='async'
           />
           <div className='absolute inset-0 bg-black/40 flex items-center justify-center'>
             <div className='w-24 h-24 bg-primary rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110 shadow-lg shadow-primary/20'>
@@ -42,6 +45,8 @@ const Gallery = () => {
                   alt={item.title}
                   className='w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-110'
                   src={item.image_1}
+                  loading='lazy'
+                  decoding='async'
                 />
                 <div className='absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4'>
                   <p className='text-xs font-medium text-white'>{item.title}</p>
@@ -52,6 +57,8 @@ const Gallery = () => {
                   alt={item.title}
                   className='w-full aspect-[3/4] object-cover transition-transform duration-500 group-hover:scale-110'
                   src={item.image_2}
+                  loading='lazy'
+                  decoding='async'
                 />
                 <div className='absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4'>
                   <p className='text-xs font-medium text-white'>{item.title}</p>

@@ -149,15 +149,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <head>
+      <body
+        className={`font-sans ${inter.variable} ${playfair.variable} ${GeistMono.variable} antialiased`}
+      >
         <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-      </head>
-      <body
-        className={`font-sans ${inter.variable} ${playfair.variable} ${GeistMono.variable} antialiased`}
-      >
         <Suspense fallback={<div>Loading...</div>}>
           <Navigation />
           {children}

@@ -110,11 +110,11 @@ export const freeResources = [
   },
   {
     id: 3,
-    name: '11 Letters Book Club',
-    description: `Join the 11 Letters Book Club, a community built around growth, deep conversations, and actionable wisdom inspired by the book.`,
+    name: 'Amor Fati Book Club',
+    description: `Join the Amor Fati Book Club, a community built around growth, deep conversations, and actionable wisdom inspired by reading books.`,
     price: 'Free',
     image: '/images/bookclub.png',
-    link: 'https://nestuge.com/11lettersbookclub',
+    link: '/book-club',
   },
   {
     id: 4,

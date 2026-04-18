@@ -59,6 +59,8 @@ const WorkshopList = () => {
                   src={event.image}
                   alt={event.title}
                   className='w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0'
+                  loading='lazy'
+                  decoding='async'
                 />
                 <div className='absolute top-4 left-4 bg-background px-3 py-1 text-xs font-bold uppercase tracking-widest border border-border'>
                   {event.status}

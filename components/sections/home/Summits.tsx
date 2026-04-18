@@ -67,6 +67,8 @@ const Summits = () => {
                 src={summit.image}
                 alt={summit.title}
                 className='w-full h-full object-cover group-hover:scale-110 transition-transform duration-700'
+                loading='lazy'
+                decoding='async'
               />
               <div className='absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 text-[10px] font-bold uppercase tracking-widest'>
                 {summit.date}

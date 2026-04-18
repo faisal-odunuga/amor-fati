@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '../../ui/button';
 import { CheckCircle } from 'lucide-react';
+import { SUPABASE_GENERAL_BASE } from '@/lib/assets';
 
 const SignatureExperience = () => {
   return (
@@ -46,9 +47,11 @@ const SignatureExperience = () => {
               <div className='relative group'>
                 <div className='absolute -inset-1 bg-primary/30 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-1000' />
                 <img
-                  src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456600/DL8A8599_tiqmwb.jpg'
+                  src={`${SUPABASE_GENERAL_BASE}/DL8A8599_tiqmwb.jpg`}
                   alt='Audience cheering at a live event'
                   className='relative rounded-none shadow-2xl object-cover h-[500px] w-full grayscale group-hover:grayscale-0 transition-all duration-700'
+                  loading='lazy'
+                  decoding='async'
                 />
               </div>
             </div>
@@ -67,6 +70,8 @@ const SignatureExperience = () => {
                   src='https://lh3.googleusercontent.com/aida-public/AB6AXuB0kYfimYrxbPA7It6YsEfDODB3rlBdkYJ59z1f8lHW-9IBWnhEjEXNFrPHwCxcwmfIjqedBb9A2AVsp8Ev5YizzUvBMWC9kh914U3jGhIISlJXDu-xC8y5A85oCpGIuZ6v5iJA89fuzpC1l9qI3ro5rGSjPEgT5cLqsPcBU3PisE3TD4Iz7UcFQ6oObHdItwObAtMn-UV1dw4xbZB7of6zlU2NUOMiSUyS16D7ZZkv3wMWPdHOe1oYi6z4fH8pJSHa_5LTq2Ff1CxB'
                   alt='Professional workshop setting'
                   className='relative rounded-none shadow-2xl object-cover h-[500px] w-full grayscale group-hover:grayscale-0 transition-all duration-700'
+                  loading='lazy'
+                  decoding='async'
                 />
               </div>
             </div>

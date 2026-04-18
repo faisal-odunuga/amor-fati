@@ -27,6 +27,8 @@ const Offerings = () => {
               src='/premium-leather-journal.jpg'
               alt='Books'
               className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-110'
+              loading='lazy'
+              decoding='async'
             />
             <div className='absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent flex items-end p-6'>
               <p className='font-serif text-2xl font-bold'>Books</p>
@@ -37,6 +39,8 @@ const Offerings = () => {
               src='/meditation-audio-headphones.jpg'
               alt='Audio Programs'
               className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-110'
+              loading='lazy'
+              decoding='async'
             />
             <div className='absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent flex items-end p-6'>
               <p className='font-serif text-2xl font-bold'>Audio Programs</p>
@@ -47,6 +51,8 @@ const Offerings = () => {
               src='/ziba-beach-retreat-vision-board-peaceful-setting.jpg'
               alt='Retreats'
               className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-110'
+              loading='lazy'
+              decoding='async'
             />
             <div className='absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent flex items-end p-6'>
               <p className='font-serif text-2xl font-bold'>Retreats</p>

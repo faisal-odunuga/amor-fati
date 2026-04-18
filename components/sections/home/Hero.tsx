@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '../../ui/button';
 import Link from 'next/link';
 import { ArrowRight, Play } from 'lucide-react';
+import { SUPABASE_GENERAL_BASE } from '@/lib/assets';
 
 const Hero = () => {
   return (
@@ -9,9 +10,12 @@ const Hero = () => {
       {/* Background Image */}
       <div className='absolute inset-0 z-0'>
         <img
-          src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771457803/JIO_6348_lzphmu.jpg'
+          src={`${SUPABASE_GENERAL_BASE}/JIO_6348_lzphmu.jpg`}
           alt='High performance professional'
           className='w-full h-full object-cover opacity-40'
+          loading='eager'
+          fetchPriority='high'
+          decoding='async'
         />
         <div className='absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent' />
       </div>

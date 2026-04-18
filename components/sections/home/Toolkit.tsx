@@ -29,6 +29,8 @@ const Toolkit = () => {
                   src={product.image}
                   alt={product.name}
                   className='w-3/4 shadow-2xl group-hover:scale-110 transition-transform duration-500'
+                  loading='lazy'
+                  decoding='async'
                 />
                 <a href={product.link} target='_blank' rel='noopener noreferrer'>
                   <button className='absolute bottom-0 left-0 w-full bg-primary text-primary-foreground py-4 translate-y-full group-hover:translate-y-0 transition-transform font-bold uppercase tracking-widest text-xs'>

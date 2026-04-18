@@ -57,6 +57,8 @@ const MindsetVsAction = () => {
               src='/images/moh-sheriff.jpeg'
               alt='Person Taking Action'
               className='relative z-10 w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-1000'
+              loading='lazy'
+              decoding='async'
             />
             <div className='absolute bottom-12 left-0 z-20 bg-background/90 backdrop-blur p-8 max-w-sm border-l-4 border-primary'>
               <p className='font-serif italic text-lg text-foreground'>

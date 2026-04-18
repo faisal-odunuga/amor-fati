@@ -1,14 +1,18 @@
 import React from 'react';
 import { ArrowDown } from 'lucide-react';
+import { SUPABASE_GENERAL_BASE } from '@/lib/assets';
 
 const PhilosophyHero = () => {
   return (
     <section className='relative h-[80vh] flex items-center justify-center overflow-hidden'>
       <div className='absolute inset-0 z-0'>
         <img
-          src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456645/DL8A8651_h8y5om.jpg'
+          src={`${SUPABASE_GENERAL_BASE}/DL8A8651_h8y5om.jpg`}
           alt='Ocean waves'
           className='w-full h-full object-cover'
+          loading='eager'
+          fetchPriority='high'
+          decoding='async'
         />
         <div className='absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/30' />
       </div>

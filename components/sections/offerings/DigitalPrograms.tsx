@@ -57,6 +57,8 @@ const DigitalPrograms = () => {
                   src={program.image}
                   alt={program.name}
                   className='object-cover w-full h-full group-hover:scale-110 transition-transform duration-700'
+                  loading='lazy'
+                  decoding='async'
                 />
                 <div className='absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-8'>
                   <span className='text-white/60 text-xs font-bold uppercase tracking-widest mb-2'>

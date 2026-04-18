@@ -12,6 +12,9 @@ const CoachProfile = () => {
             alt='Professional portrait of the MOH'
             className='w-full aspect-[4/5] object-cover rounded shadow-2xl grayscale hover:grayscale-0 transition-all duration-700'
             src='/images/moh-sheriff.jpeg'
+            loading='eager'
+            fetchPriority='high'
+            decoding='async'
             onError={(e) => (e.currentTarget.style.display = 'none')}
           />
           <div className='absolute bottom-8 left-8 bg-background p-6 shadow-xl max-w-xs border border-border'>

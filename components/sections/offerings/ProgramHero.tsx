@@ -1,15 +1,19 @@
 import React from 'react';
 import { Button } from '../../ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { SUPABASE_GENERAL_BASE } from '@/lib/assets';
 
 const ProgramHero = () => {
   return (
     <section className='relative h-[70vh] flex items-center justify-center text-center text-white px-4 overflow-hidden'>
       <div className='absolute inset-0 z-0'>
         <img
-          src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771457800/JIO_6313_haayda.jpg'
+          src={`${SUPABASE_GENERAL_BASE}/JIO_6313_haayda.jpg`}
           alt='Hero background'
           className='w-full h-full object-cover opacity-60'
+          loading='eager'
+          fetchPriority='high'
+          decoding='async'
         />
         <div className='absolute inset-0 bg-gradient-to-b from-black/60 to-black/80' />
       </div>

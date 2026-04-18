@@ -12,6 +12,8 @@ const Philosophy = () => {
             <img
               src='/images/statue.png'
               className='w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000 opacity-90'
+              loading='lazy'
+              decoding='async'
             />
           </div>
           <div className='absolute -bottom-8 -right-8 w-64 h-64 border border-primary/20 -z-10' />

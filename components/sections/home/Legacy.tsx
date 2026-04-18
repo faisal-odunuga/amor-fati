@@ -1,4 +1,5 @@
 import React from 'react';
+import { SUPABASE_GENERAL_BASE } from '@/lib/assets';
 
 const Legacy = () => {
   return (
@@ -15,9 +16,11 @@ const Legacy = () => {
           {/* Main Large Image */}
           <div className='md:col-span-2 md:row-span-2 relative overflow-hidden group'>
             <img
-              src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456598/DL8A8586_srgvyx.jpg'
+              src={`${SUPABASE_GENERAL_BASE}/DL8A8586_srgvyx.jpg`}
               alt='Vison Board 2026'
               className='w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700'
+              loading='lazy'
+              decoding='async'
             />
             <div className='absolute inset-0 bg-gradient-to-t from-black/80 to-transparent p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity'>
               <p className='text-primary font-bold uppercase text-xs tracking-widest mb-2'>
@@ -30,36 +33,44 @@ const Legacy = () => {
           {/* Regular Image 1 */}
           <div className='relative overflow-hidden group'>
             <img
-              src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771457869/JIO_6342_tsfajv.jpg'
+              src={`${SUPABASE_GENERAL_BASE}/JIO_6342_tsfajv.jpg`}
               alt='Speaker'
               className='w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700'
+              loading='lazy'
+              decoding='async'
             />
           </div>
 
           {/* Regular Image 2 */}
           <div className='relative overflow-hidden group'>
             <img
-              src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771457785/JIO_6337_cvjnsg.jpg'
+              src={`${SUPABASE_GENERAL_BASE}/JIO_6337_cvjnsg.jpg`}
               alt='Networking'
               className='w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700'
+              loading='lazy'
+              decoding='async'
             />
           </div>
 
           {/* Regular Image 3 */}
           <div className='md:col-span-1 relative overflow-hidden group'>
             <img
-              src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771456598/DL8A8597_rxedx8.jpg'
+              src={`${SUPABASE_GENERAL_BASE}/DL8A8597_rxedx8.jpg`}
               alt='Mentorship'
               className='w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700'
+              loading='lazy'
+              decoding='async'
             />
           </div>
 
           {/* Wide Image 4 */}
           <div className='md:col-span-2 relative overflow-hidden group'>
             <img
-              src='https://res.cloudinary.com/dfrvta0t5/image/upload/v1771457715/JIO_6270_hcgs6s.jpg'
+              src={`${SUPABASE_GENERAL_BASE}/JIO_6270_hcgs6s.jpg`}
               alt='Singapore'
               className='w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700'
+              loading='lazy'
+              decoding='async'
             />
             <div className='absolute inset-0 bg-gradient-to-t from-black/80 to-transparent p-8 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity'>
               <p className='text-primary font-bold uppercase text-xs tracking-widest mb-2'>

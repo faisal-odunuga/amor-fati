@@ -28,6 +28,8 @@ const UpcomingEvents = () => {
               alt='Main Stage Event'
               className='absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700'
               src='https://lh3.googleusercontent.com/aida-public/AB6AXuDZeyS0IYxCuLINo_SJpDz3pQIIMJ6OVRATQ4ft7OqmqgAjXNZzWVwGnrf_zUvowXH6FzEqaIkqQ-C7MfhzJGtqI4p5628ujKAfejpPpygVnT0c_ieVOWU3XDXAVKg7xb66zZFwVeY7P_mJtcQJQqQAqZuZkjgT-LaGR_i92bCloLPpdBQCde1Q6MmvEAVlWokin9aV9zY1cBRZQl1YjVs08o3XXjIoz0UGfD7t_c3yXzNzzm2b-KYW8EOcZLIjGWK8w_9TwQOosDa5'
+              loading='lazy'
+              decoding='async'
             />
             <div className='absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent'></div>
             <div className='absolute bottom-0 left-0 p-8 md:p-12 w-full'>
