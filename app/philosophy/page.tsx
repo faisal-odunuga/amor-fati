@@ -1,6 +1,20 @@
 // 'use client';
 
+import type { Metadata } from 'next';
 import React from 'react';
+
+export const metadata: Metadata = {
+  title: 'Our Philosophy',
+  description:
+    'Explore the Amor Fati philosophy — Stoic principles of radical acceptance, mental mastery, and loving your fate as a path to peak performance and personal evolution.',
+  alternates: { canonical: '/philosophy' },
+  openGraph: {
+    title: 'Our Philosophy | Amor Fati',
+    description:
+      'Stoic principles and the tenets driving every Amor Fati programme. Love your fate. Master your mind.',
+    url: 'https://www.amorfatihq.com/philosophy',
+  },
+};
 import PhilosophyHero from '@/components/sections/philosophy/PhilosophyHero';
 import PillarsOfFate from '@/components/sections/philosophy/PillarsOfFate';
 import MindsetVsAction from '@/components/sections/philosophy/MindsetVsAction';

@@ -1,0 +1,82 @@
+# Amor Fati
+
+> Amor Fati is a Lagos-based personal development and mindset coaching brand founded by Muhammad Sheriff (Moh). The name means "Love of Fate" — a Stoic philosophy of embracing every circumstance, good or bad, as necessary and worthy of love. The brand's mission is to help individuals realign their minds for peak performance and personal evolution.
+
+## Brand Overview
+
+- **Founder**: Muhammad Sheriff (Moh Sheriff)
+- **Location**: Lagos, Nigeria (coaching available worldwide via video call)
+- **Contact Email**: amorfatihq@gmail.com
+- **Contact Phone**: +234 906 1447 022
+- **Instagram**: [@amorfati.hq](https://www.instagram.com/amorfati.hq/)
+
+- **Website**: https://www.amorfatihq.com/
+
+## Philosophy
+
+Amor Fati is rooted in Stoic philosophy — specifically the concept of loving one's fate (amor fati). The brand teaches that true power comes not from fighting reality, but from embracing it fully and extracting growth from every experience. Key tenets include:
+
+- **Radical Acceptance**: Embracing circumstances as they are, not as you wish they were
+- **Active Engagement**: Using adversity as fuel rather than an excuse
+- **Mental Mastery**: Training the mind to remain calm, clear, and confident under pressure
+- **Overconfidence as a Tool**: Reframing confidence as a deliberate, learnable skill
+- **Legacy Thinking**: Living in a way you would be proud to relive — the Nietzschean Eternal Recurrence principle
+
+## Pages
+
+### Home (/)
+
+The homepage introduces Amor Fati's mission: "Create a life worth reliving." It features the core philosophy summary, Legacy section, Toolkit section, and a newsletter sign-up.
+
+### Philosophy (/philosophy)
+
+Deep-dive into the Amor Fati philosophy. Covers the Pillars of Fate, Mindset vs. Action frameworks, and a full Tenets Grid explaining each core belief of the brand.
+
+### Offerings (/offerings)
+
+All products and programs available from Amor Fati:
+- **Overconfidence 101**: A 21-day, 12-module course on building unshakeable confidence and eliminating limiting beliefs. Available on Selar.
+- **Mental Mastery Blueprint**: An 8-week, 16-module course on mental resilience and clarity (coming soon).
+- **11 Letters I Wrote, but never sent (Hard Copy)**: Physical book. Price ₦11,500. Available at https://selar.com/11LETTERSBOOK
+- **11 Letters I Wrote, but never sent (PDF E-Book)**: Digital book. Price ₦7,500. Available at https://selar.com/11letterspdf
+- **11 Letters Book Club**: Free community built around growth and deep conversations. Join at https://nestuge.com/11lettersbookclub
+- **Moh's Substack**: Free weekly reflections and thought-provoking insights. Available at https://tinyurl.com/2s3t2kws
+
+### About (/about)
+
+The story and mission of Amor Fati as a company — who we are, what we stand for, and why we exist. Covers the brand's mission statement, core values, media features, and how to get in touch.
+
+### Journal (/journal)
+
+Articles and essays written by Moh on themes of mindset, fate, and personal evolution. Featured articles include:
+- "The Art of Loving Your Fate" (March 15, 2024)
+- "Why Overconfidence is Underrated" (March 8, 2024)
+- "Creating a Life Worth Reliving" (March 1, 2024)
+
+### Events (/events)
+
+Upcoming retreats, workshops, and live experiences hosted by Amor Fati. Currently Lagos-based with plans to expand internationally.
+
+### Contact (/contact)
+
+Contact form for booking 1:1 coaching sessions, group coaching inquiries, masterclass bookings, and general questions.
+
+## FAQ
+
+**How do I book a 1:1 coaching session?**
+Use the contact form at https://www.amorfatihq.com/contact and include your goals and availability. Moh will reply with available times and next steps.
+
+**Do you offer group coaching or masterclasses?**
+Yes. The Overconfidence 101 Masterclass is available for teams, schools, and organizations. Reach out via the contact form.
+
+**What's the best way to stay updated on events?**
+Subscribe to the newsletter on the Journal page to be first to know about upcoming retreats and events.
+
+**Are your services available internationally?**
+1:1 coaching is available worldwide via video call. In-person events are currently Lagos-based, with plans to expand.
+
+## Optional
+
+- [Full content for AI (llms-full.txt)](https://www.amorfatihq.com/llms-full.txt)
+- [Sitemap](https://www.amorfatihq.com/sitemap.xml)
+- [robots.txt](https://www.amorfatihq.com/robots.txt)
