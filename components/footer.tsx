@@ -60,7 +60,7 @@ export function Footer() {
           <div className='space-y-4'>
             <h4 className='font-semibold text-sm'>Contact</h4>
             <ul className='space-y-2 text-sm text-muted-foreground'>
-              <li>amorfatihq@gmail.com</li>
+              <li>info@amorfatihq.com</li>
               <li>09061447022</li>
             </ul>
             <div className='flex gap-3 pt-2'>
@@ -93,7 +93,10 @@ export function Footer() {
             </p>
             <form className='flex flex-col sm:flex-row gap-2'>
               <Input type='email' placeholder='Your email' className='flex-1' />
-              <Button type='submit' className='bg-accent hover:bg-accent/90 text-accent-foreground sm:w-auto w-full'>
+              <Button
+                type='submit'
+                className='bg-accent hover:bg-accent/90 text-accent-foreground sm:w-auto w-full'
+              >
                 Join
               </Button>
             </form>

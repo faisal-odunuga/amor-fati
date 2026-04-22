@@ -27,7 +27,7 @@ export const contactMethods = [
   {
     icon: Mail,
     title: 'Email',
-    value: 'amorfatihq@gmail.com',
+    value: 'info@amorfatihq.com',
     type: 'email',
   },
   {
@@ -97,7 +97,8 @@ export const freeResources = [
     name: '(HARD COPY) 11 Letters I Wrote, but never sent',
     description: `A hard copy of my book, 11 Letters I Wrote, but never sent: Don't pick — be both RICH and HAPPY. Screw the OR.`,
     price: '₦11,500',
-    image: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/11-letters-i-wrote-hard-copy.jpeg',
+    image:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/11-letters-i-wrote-hard-copy.jpeg',
     link: 'https://selar.com/11LETTERSBOOK',
   },
   {
@@ -105,7 +106,8 @@ export const freeResources = [
     name: '(PDF E-BOOK) 11 Letters I Wrote, but never sent',
     description: `A soft copy of my book, 11 Letters I Wrote, but never sent: Don't pick — be both RICH and HAPPY. Screw the OR.`,
     price: '₦7,500',
-    image: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/11-letters-i-wrote-soft-copy.jpeg',
+    image:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/11-letters-i-wrote-soft-copy.jpeg',
     link: 'https://selar.com/11letterspdf',
   },
   {
@@ -121,7 +123,8 @@ export const freeResources = [
     name: 'Moh’s Substack',
     description: `Weekly reflections, lessons, and thought-provoking insights — straight to your inbox. Stay connected and inspired.`,
     price: 'Free',
-    image: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/moh-sheriff.jpeg',
+    image:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/moh-sheriff.jpeg',
     link: 'https://tinyurl.com/2s3t2kws',
   },
 ];
@@ -157,8 +160,10 @@ export const testimonials = [
   {
     id: 1,
     name: 'Sarah Johnson',
-    image_1: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8591_mjfng7.jpg',
-    image_2: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8587_ajj3rq.jpg',
+    image_1:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8591_mjfng7.jpg',
+    image_2:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8587_ajj3rq.jpg',
     title: 'Creative Coach',
     quote:
       'The 11 Letters completely changed how I approach my thoughts. It’s like I rewired my mindset from within.',
@@ -166,8 +171,10 @@ export const testimonials = [
   {
     id: 2,
     name: 'Daniel Adeyemi',
-    image_1: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8602_vpk09z.jpg',
-    image_2: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8604_dodldz.jpg',
+    image_1:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8602_vpk09z.jpg',
+    image_2:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8604_dodldz.jpg',
     title: 'Entrepreneur',
     quote:
       'The 21-Day Audio Experience grounded me mentally and helped me handle challenges with clarity and calm.',
@@ -175,8 +182,10 @@ export const testimonials = [
   {
     id: 3,
     name: 'Amara O.',
-    image_1: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8614_gyq9ym.jpg',
-    image_2: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8615_xy1kks.jpg',
+    image_1:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8614_gyq9ym.jpg',
+    image_2:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8615_xy1kks.jpg',
     title: 'Writer',
     quote:
       'Every session felt like peeling off a mental layer. It’s deep, practical, and beautifully structured.',
@@ -184,8 +193,10 @@ export const testimonials = [
   {
     id: 4,
     name: 'Amara O.',
-    image_1: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8625_orzhon.jpg',
-    image_2: 'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8600_wu5js6.jpg',
+    image_1:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8625_orzhon.jpg',
+    image_2:
+      'https://oufksmargaiutcykyjne.supabase.co/storage/v1/object/public/general/DL8A8600_wu5js6.jpg',
     title: 'Writer',
     quote:
       'Every session felt like peeling off a mental layer. It’s deep, practical, and beautifully structured.',
