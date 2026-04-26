@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { LogoutButton } from '@/components/book-club/logout-button';
 import { cn } from '@/utils';
 import { PlatformNav } from './platform-nav';
+import { type PlatformNavItem } from '@/lib/book-club/constants';
 
 type PlatformShellProps = {
   title: string;

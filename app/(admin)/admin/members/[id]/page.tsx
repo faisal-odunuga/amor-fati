@@ -22,6 +22,17 @@ export default async function AdminMemberDetailPage({
       getActiveReadingPlan()
     ]);
 
+    if (!plan) {
+      return (
+        <AdminShell>
+          <div className='rounded-xl border border-dashed border-black/10 bg-white p-12 text-center'>
+            <h2 className='font-serif text-2xl text-black mb-2'>No Active Plan</h2>
+            <p className='text-sm text-black/65'>Cannot calculate progress without an active reading plan.</p>
+          </div>
+        </AdminShell>
+      );
+    }
+
     const percentage = calculateWeightedProgressFromCompletedWeight(
       progress.totalWeightCompleted,
       plan.totalWeight

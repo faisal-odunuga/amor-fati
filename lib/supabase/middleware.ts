@@ -65,10 +65,9 @@ export async function updateSession(request: NextRequest, options: UpdateSession
     const validAdmin = profile?.role === 'admin';
 
     if ((options.role === 'member' && !validMember && !validAdmin) || (options.role === 'admin' && !validAdmin)) {
-      // Allow the request to proceed to the rewritten path.
-      // The application's server components (like AdminShell) will handle the role check 
-      // and throw a "Forbidden" error, which will be caught by the section's error.tsx.
-      // This prevents redirect loops.
+      const url = request.nextUrl.clone();
+      url.pathname = '/forbidden';
+      return NextResponse.redirect(url);
     }
   }
 
