@@ -1,46 +1,52 @@
 'use client';
 
-import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import type { ReadingPlan } from '@/lib/book-club/types';
+import { toast } from 'sonner';
 
 export function useLogSubmission(plan: ReadingPlan) {
   const router = useRouter();
-  const [isPending, setIsPending] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
-  async function submit(formData: FormData) {
-    setIsPending(true);
-    setMessage(null);
+  const mutation = useMutation({
+    mutationFn: async (formData: FormData) => {
+      const response = await fetch('/api/member/logs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          scheduleItemId: formData.get('scheduleItemId'),
+          planId: plan.id,
+          nestugeUrl: formData.get('nestugeUrl'),
+          desc: formData.get('desc') || undefined,
+        }),
+      });
 
-    const response = await fetch('/api/member/logs', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        scheduleItemId: formData.get('scheduleItemId'),
-        planId: plan.id,
-        nestugeUrl: formData.get('nestugeUrl'),
-        reflectionSummary: formData.get('reflectionSummary'),
-        keyInsight: formData.get('keyInsight'),
-        actionTaken: formData.get('actionTaken'),
-      }),
-    });
+      const payload = await response.json();
 
-    const payload = await response.json();
-    setIsPending(false);
-    console.log(payload);
-    setMessage(payload.message ?? (response.ok ? 'Log saved.' : 'Unable to save log.'));
+      if (!response.ok) {
+        throw new Error(payload.error || 'Unable to save log.');
+      }
 
-    if (response.ok) {
+      return payload;
+    },
+    onSuccess: () => {
+      toast.success('Log successfully saved.');
+      queryClient.invalidateQueries({ queryKey: ['logs'] });
       router.refresh();
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Unable to save log.');
     }
-  }
+  });
 
   return {
-    isPending,
-    message,
-    submit,
+    isPending: mutation.isPending,
+    isError: mutation.isError,
+    error: mutation.error,
+    submit: mutation.mutate,
+    isSuccess: mutation.isSuccess,
   };
 }

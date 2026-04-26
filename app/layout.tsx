@@ -3,6 +3,8 @@ import type React from 'react';
 import localFont from 'next/font/local';
 import { GeistMono } from 'geist/font/mono';
 import { Analytics } from '@vercel/analytics/next';
+import { Toaster } from 'sonner';
+import QueryProvider from '@/components/providers/query-provider';
 import './globals.css';
 
 const display = localFont({
@@ -62,8 +64,11 @@ export default function RootLayout({
       <body
         className={`${sans.variable} ${display.variable} ${GeistMono.variable} min-h-screen bg-background text-foreground antialiased`}
       >
-        {children}
-        <Analytics />
+        <QueryProvider>
+          {children}
+        </QueryProvider>
+        <Analytics debug={false} />
+        <Toaster />
       </body>
     </html>
   );

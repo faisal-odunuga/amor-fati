@@ -11,6 +11,20 @@ export default async function MemberProgressPage() {
     getUserProgress(),
     getDailyLogs(),
   ]);
+  if (!plan) {
+    return (
+      <BookClubShell>
+        <div className='rounded-xl border border-dashed border-black/10 bg-white p-12 text-center shadow-[0_25px_70px_rgba(0,0,0,0.06)]'>
+          <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-[#d9a517] mb-4'>Status Offline</p>
+          <h2 className='font-serif text-3xl text-black mb-4'>No Progress Data</h2>
+          <p className='max-w-md mx-auto text-sm text-black/65'>
+            Progress tracking is unavailable because there is no active reading cycle.
+          </p>
+        </div>
+      </BookClubShell>
+    );
+  }
+
   const percentage = calculateWeightedProgressFromCompletedWeight(
     progress.totalWeightCompleted,
     plan.totalWeight

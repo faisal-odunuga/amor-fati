@@ -7,7 +7,14 @@ const Logo = () => {
   return (
     <Link href='/' className='flex items-center gap-2'>
       <span>
-        <Image src='/logo.png' alt='logo' width={30} height={30} />
+        <Image 
+          src='/logo.png' 
+          alt='Amor Fati' 
+          width={30} 
+          height={33} 
+          className='w-auto h-8'
+          priority
+        />
       </span>
       <span className='font-serif text-2xl font-bold tracking-tight'>Amor Fati</span>
     </Link>

@@ -1,24 +1,28 @@
 import { LoginForm } from '@/components/book-club/login-form';
 
-export function TenantLoginScreen({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string;
-  title: string;
-  description: string;
-}) {
+type TenantLoginScreenProps = {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+};
+
+export function TenantLoginScreen({ eyebrow, title, description }: TenantLoginScreenProps) {
   return (
-    <main className='min-h-screen bg-background px-6 py-16'>
-      <div className='mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.15fr_0.85fr]'>
-        <section className='flex min-h-[560px] flex-col justify-center border bg-secondary/20 p-10 sm:p-14'>
-          <p className='text-xs font-bold uppercase tracking-[0.35em] text-primary'>{eyebrow}</p>
-          <h1 className='mt-6 max-w-3xl font-serif text-5xl leading-tight text-foreground sm:text-6xl'>{title}</h1>
-          <p className='mt-6 max-w-xl text-base leading-7 text-muted-foreground'>{description}</p>
-          <div className='mt-10 h-px w-24 bg-primary/40' />
-        </section>
-        <div className='self-center'>
+    <main className='min-h-screen bg-[#faf7f1] px-6 py-16 flex items-center justify-center relative overflow-hidden'>
+      {/* Decorative background elements */}
+      <div className='absolute -top-24 -right-24 size-96 rounded-full bg-[#d9a517]/5 blur-3xl' />
+      <div className='absolute -bottom-24 -left-24 size-96 rounded-full bg-black/5 blur-3xl' />
+      
+      <div className='relative z-10 w-full max-w-[1000px] grid lg:grid-cols-2 gap-12 items-center'>
+        <div className='hidden lg:block'>
+          <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-[#d9a517] mb-6'>{eyebrow || 'Amor Fati'}</p>
+          <h2 className='font-serif text-5xl text-black leading-tight'>{title || 'Mastery of the mind starts here.'}</h2>
+          <p className='mt-6 text-sm text-black/65 leading-relaxed max-w-sm'>
+            {description || 'Enter your private credentials to access the internal ecosystem of Amor Fati.'}
+          </p>
+        </div>
+        
+        <div className='w-full max-w-md mx-auto'>
           <LoginForm />
         </div>
       </div>

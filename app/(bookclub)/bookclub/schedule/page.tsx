@@ -1,9 +1,14 @@
 import { ScheduleBoard } from '@/components/book-club/schedule-board';
 import { BookClubShell } from '@/components/layouts/bookclub-shell';
-import { getScheduleItems } from '@/lib/book-club/queries';
+import { getScheduleItems, getDailyLogs } from '@/lib/book-club/queries';
 
 export default async function MemberSchedulePage() {
-  const scheduleItems = await getScheduleItems();
+  const [scheduleItems, logs] = await Promise.all([
+    getScheduleItems(),
+    getDailyLogs(),
+  ]);
+
+  const loggedItemIds = new Set(logs.map(log => log.scheduleItemId));
 
   return (
     <BookClubShell>
@@ -15,7 +20,17 @@ export default async function MemberSchedulePage() {
           Fridays are reserved for recovery. Saturdays are built for implementation. Every item carries an explicit behavioral demand.
         </p>
       </div>
-      <ScheduleBoard items={scheduleItems} />
+      {scheduleItems.length > 0 ? (
+        <ScheduleBoard items={scheduleItems} loggedItemIds={loggedItemIds} />
+      ) : (
+        <div className='rounded-xl border border-dashed border-black/10 bg-white p-12 text-center shadow-[0_25px_70px_rgba(0,0,0,0.06)]'>
+          <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-[#d9a517] mb-4'>Status Offline</p>
+          <h2 className='font-serif text-3xl text-black mb-4'>No Active Cadence</h2>
+          <p className='max-w-md mx-auto text-sm text-black/65'>
+            The reading system is currently between cycles. Check back soon for the new schedule.
+          </p>
+        </div>
+      )}
     </div>
     </BookClubShell>
   );

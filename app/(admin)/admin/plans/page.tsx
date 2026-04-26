@@ -1,7 +1,10 @@
 import { AdminPlanGenerator } from '@/components/book-club/admin-plan-generator';
 import { AdminShell } from '@/components/layouts/admin-shell';
+import { getAllBooks } from '@/lib/book-club/queries';
 
-export default function AdminPlansPage() {
+export default async function AdminPlansPage() {
+  const books = await getAllBooks();
+
   return (
     <AdminShell>
     <div className='space-y-6'>
@@ -12,7 +15,7 @@ export default function AdminPlansPage() {
           AI only drafts the schedule. The preview grid is the control layer. Nothing writes to the database until an admin approves it.
         </p>
       </div>
-      <AdminPlanGenerator />
+      <AdminPlanGenerator books={books} />
     </div>
     </AdminShell>
   );

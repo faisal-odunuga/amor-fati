@@ -48,12 +48,13 @@ export async function updateSession(request: NextRequest, options: UpdateSession
   } = await supabase.auth.getUser();
 
   if (!user) {
-    const url = request.nextUrl.clone();
-    url.pathname = options.loginPath ?? '/login';
-    return NextResponse.redirect(url);
-  }
-
-  if (options.role) {
+    const targetLoginPath = options.loginPath ?? '/login';
+    if (request.nextUrl.pathname !== targetLoginPath) {
+      const url = request.nextUrl.clone();
+      url.pathname = targetLoginPath;
+      return NextResponse.redirect(url);
+    }
+  } else if (options.role) {
     const { data: profile } = await supabase
       .from('profiles')
       .select('role, subscription_status')

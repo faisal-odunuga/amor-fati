@@ -1,6 +1,7 @@
 'use client';
 
 import { LoaderCircle } from 'lucide-react';
+import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -13,16 +14,24 @@ type LogFormProps = {
 };
 
 export function LogForm({ plan, scheduleItems }: LogFormProps) {
-  const { isPending, message, submit } = useLogSubmission(plan);
+  const formRef = useRef<HTMLFormElement>(null);
+  const { isPending, submit, isSuccess } = useLogSubmission(plan);
 
   return (
     <form
-      action={submit}
+      ref={formRef}
+      action={(formData) => {
+        submit(formData, {
+          onSuccess: () => {
+            formRef.current?.reset();
+          }
+        });
+      }}
       className='border border-border bg-background p-8'
     >
       <div className='grid gap-6 lg:grid-cols-2'>
         <label className='space-y-3'>
-          <span className='text-sm uppercase tracking-[0.25em] text-muted-foreground'>Today</span>
+          <span className='text-sm uppercase tracking-[0.25em] text-muted-foreground'>Schedule Item</span>
           <select
             name='scheduleItemId'
             className='flex h-12 w-full rounded-none border border-border bg-secondary/20 px-4 text-sm outline-none'
@@ -48,24 +57,12 @@ export function LogForm({ plan, scheduleItems }: LogFormProps) {
         </label>
       </div>
 
-      <div className='mt-6 grid gap-6 lg:grid-cols-2'>
-        <label className='space-y-3'>
-          <span className='text-sm uppercase tracking-[0.25em] text-muted-foreground'>Key Insight</span>
-          <Textarea name='keyInsight' required className='min-h-36 rounded-none border-border bg-secondary/20' />
-        </label>
-
-        <label className='space-y-3'>
-          <span className='text-sm uppercase tracking-[0.25em] text-muted-foreground'>Action Taken</span>
-          <Textarea name='actionTaken' required className='min-h-36 rounded-none border-border bg-secondary/20' />
-        </label>
-      </div>
-
       <label className='mt-6 block space-y-3'>
-        <span className='text-sm uppercase tracking-[0.25em] text-muted-foreground'>Reflection Summary</span>
+        <span className='text-sm uppercase tracking-[0.25em] text-muted-foreground'>Description (Optional)</span>
         <Textarea
-          name='reflectionSummary'
-          className='min-h-28 rounded-none border-border bg-secondary/20'
-          placeholder='Optional backup reflection for future internal journaling.'
+          name='desc'
+          placeholder='How did it go? What was your key takeaway?'
+          className='min-h-24 rounded-none border-border bg-secondary/20'
         />
       </label>
 
@@ -75,10 +72,9 @@ export function LogForm({ plan, scheduleItems }: LogFormProps) {
           disabled={isPending}
           className='h-12 rounded-none bg-primary px-6 text-primary-foreground hover:bg-primary/90'
         >
-          {isPending ? <LoaderCircle className='size-4 animate-spin' /> : null}
+          {isPending ? <LoaderCircle className='size-4 animate-spin mr-2' /> : null}
           Save Proof
         </Button>
-        {message ? <p className='text-sm text-muted-foreground'>{message}</p> : null}
       </div>
     </form>
   );

@@ -2,63 +2,78 @@
 
 import { useMemo, useState } from 'react';
 import type { ScheduleDraftItem } from '@/lib/book-club/types';
+import { toast } from 'sonner';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function usePlanGenerator() {
   const [items, setItems] = useState<ScheduleDraftItem[]>([]);
   const [title, setTitle] = useState('New Monthly Plan');
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
   const monthDate = useMemo(() => items[0]?.date ?? '', [items]);
 
-  async function generateDraft(formData: FormData) {
-    setIsLoading(true);
-    setMessage(null);
+  const generateDraftMutation = useMutation({
+    mutationFn: async (formData: FormData) => {
+      const response = await fetch('/api/admin/plans/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: formData.get('title'),
+          startDate: formData.get('startDate'),
+          endDate: formData.get('endDate'),
+          bookId: formData.get('bookId'),
+          mode: formData.get('mode'),
+          input: formData.get('input'),
+        }),
+      });
 
-    const response = await fetch('/api/admin/plans/generate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: formData.get('title'),
-        startDate: formData.get('startDate'),
-        endDate: formData.get('endDate'),
-        chapters: String(formData.get('chapters') || '')
-          .split('\n')
-          .map((item) => item.trim())
-          .filter(Boolean),
-      }),
-    });
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload.error ?? 'Could not generate draft.');
+      }
+      return payload.items as ScheduleDraftItem[];
+    },
+    onSuccess: (data) => {
+      setItems(data);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
-    const payload = await response.json();
-    setIsLoading(false);
+  const saveDraftMutation = useMutation({
+    mutationFn: async () => {
+      if (!items.length) return;
+      
+      const response = await fetch('/api/admin/plans', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          items,
+          bookId: items[0].book_id,
+          monthDate: items[0].date,
+        }),
+      });
 
-    if (!response.ok) {
-      setMessage(payload.error ?? 'Could not generate draft.');
-      return;
-    }
-
-    setItems(payload.items);
-    setMessage('Draft generated. Review before saving.');
-  }
-
-  async function saveDraft() {
-    const response = await fetch('/api/admin/plans', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title,
-        monthDate,
-        items,
-      }),
-    });
-
-    const payload = await response.json();
-    setMessage(payload.message ?? (response.ok ? 'Plan saved.' : 'Failed to save plan.'));
-  }
+      if (!response.ok) {
+        const payload = await response.json();
+        throw new Error(payload.error ?? 'Could not save plan.');
+      }
+    },
+    onSuccess: () => {
+      toast.success('Plan successfully saved.');
+      queryClient.invalidateQueries({ queryKey: ['plans'] });
+      queryClient.invalidateQueries({ queryKey: ['active-plan'] });
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
   function updateItem(index: number, patch: Partial<ScheduleDraftItem>) {
     setItems((current) =>
@@ -84,11 +99,11 @@ export function usePlanGenerator() {
   return {
     items,
     title,
-    isLoading,
-    message,
+    isLoading: generateDraftMutation.isPending,
+    isSaving: saveDraftMutation.isPending,
     setTitle,
-    generateDraft,
-    saveDraft,
+    generateDraft: generateDraftMutation.mutate,
+    saveDraft: saveDraftMutation.mutate,
     updateItem,
     moveItem,
   };

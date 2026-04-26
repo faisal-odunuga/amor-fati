@@ -1,24 +1,34 @@
 'use client';
 
-import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 export function useLogout() {
   const router = useRouter();
-  const [isPending, setIsPending] = useState(false);
 
-  async function logout() {
-    setIsPending(true);
-    const supabase = createClient();
-    await supabase.auth.signOut();
-    setIsPending(false);
-    router.push('/login');
-    router.refresh();
-  }
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const supabase = createClient();
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        throw new Error(error.message);
+      }
+      return true;
+    },
+    onSuccess: () => {
+      router.push('/login');
+      router.refresh();
+      toast.success('Successfully logged out.');
+    },
+    onError: (error) => {
+      toast.error(error.message || 'Unable to log out.');
+    },
+  });
 
   return {
-    isPending,
-    logout,
+    isPending: mutation.isPending,
+    logout: () => mutation.mutate(),
   };
 }

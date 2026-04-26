@@ -1,11 +1,6 @@
 import { z } from 'zod';
 
-export const scheduleItemTypeSchema = z.enum([
-  'reading',
-  'catchup',
-  'implementation',
-  'event',
-]);
+export const scheduleItemTypeSchema = z.enum(['reading', 'catchup', 'implementation', 'event']);
 
 export type ScheduleItemType = z.infer<typeof scheduleItemTypeSchema>;
 export type Role = 'admin' | 'member';
@@ -28,6 +23,9 @@ export type Book = {
   coverUrl: string;
   pdfUrl: string | null;
   description: string;
+  totalPages: number | null;
+  totalChapters: number | null;
+  readingType: 'chapter' | 'pages' | null;
 };
 
 export type ReadingPlan = {
@@ -57,10 +55,20 @@ export type DailyLog = {
   scheduleItemId: string;
   planId: string;
   nestugeUrl: string;
-  reflectionSummary: string;
-  keyInsight: string;
-  actionTaken: string;
+  logDate: string;
+  desc?: string;
   createdAt: string;
+};
+
+export type DailyLogWithProfile = DailyLog & {
+  profile: {
+    fullName: string;
+    email: string;
+  };
+  scheduleItem?: {
+    label: string;
+    date: string;
+  };
 };
 
 export type UserProgress = {
@@ -77,6 +85,14 @@ export type Streak = {
   currentStreak: number;
   longestStreak: number;
   lastActiveDate: string | null;
+};
+
+export type LeaderboardEntry = {
+  profileId: string;
+  fullName: string;
+  score: number;
+  currentStreak: number;
+  completedWeight: number;
 };
 
 export type Testimonial = {
@@ -103,6 +119,7 @@ export type ScheduleDraftItem = Pick<
   'date' | 'label' | 'description' | 'type' | 'weight'
 > & {
   dayIndex: number;
+  book_id?: string;
 };
 
 export type AdminAnalytics = {
@@ -122,7 +139,9 @@ export type AdminAnalytics = {
 export const createScheduleDraftSchema = z.object({
   startDate: z.string().date(),
   endDate: z.string().date(),
-  chapters: z.array(z.string().min(1)),
+  input: z.string(),
+  bookId: z.string().uuid(),
+  mode: z.enum(['chapters', 'pages']),
   title: z.string().min(3),
 });
 
@@ -138,7 +157,7 @@ export const savePlanSchema = z.object({
       description: z.string().min(1),
       type: scheduleItemTypeSchema,
       weight: z.number().positive(),
-    })
+    }),
   ),
 });
 
@@ -146,7 +165,5 @@ export const createDailyLogSchema = z.object({
   scheduleItemId: z.string().uuid(),
   planId: z.string().uuid(),
   nestugeUrl: z.string().url(),
-  reflectionSummary: z.string().min(10).max(500).optional().default(''),
-  keyInsight: z.string().min(3).max(220),
-  actionTaken: z.string().min(3).max(220),
+  desc: z.string().optional(),
 });

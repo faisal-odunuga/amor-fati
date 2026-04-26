@@ -1,131 +1,135 @@
-import { eachDayOfInterval, formatISO } from 'date-fns';
-import { createScheduleDraftSchema, type ScheduleDraftItem, type ScheduleItemType } from '@/lib/book-club/types';
-import { getWeightForType } from '@/lib/book-club/progress';
+import { type ScheduleDraftItem } from '@/lib/book-club/types';
 
-const OPENAI_ENDPOINT = 'https://api.openai.com/v1/responses';
-
-function inferTypeFromDate(day: Date): ScheduleItemType {
-  if (day.getUTCDay() === 5) {
-    return 'catchup';
+/**
+ * Splits a single page range into N equal units.
+ */
+function performSmartSplit(start: number, end: number, unitsCount: number) {
+  const totalPages = end - start + 1;
+  const pagesPerDay = totalPages / unitsCount;
+  
+  const units = [];
+  for (let i = 0; i < unitsCount; i++) {
+    units.push({
+      start: Math.floor(start + i * pagesPerDay),
+      end: Math.floor(start + (i + 1) * pagesPerDay - 1)
+    });
   }
-
-  if (day.getUTCDay() === 6) {
-    return 'implementation';
-  }
-
-  return 'reading';
+  if (units.length > 0) units[units.length - 1].end = end;
+  return units;
 }
 
-function buildDeterministicDraft(input: {
-  startDate: string;
-  endDate: string;
-  chapters: string[];
-}): ScheduleDraftItem[] {
-  const days = eachDayOfInterval({
-    start: new Date(`${input.startDate}T00:00:00Z`),
-    end: new Date(`${input.endDate}T00:00:00Z`),
-  });
+/**
+ * Parses the raw input string into units (chapters or page ranges).
+ */
+function parseInputUnits(input: string, mode: 'chapters' | 'pages', totalReadingDays: number) {
+  if (!input || !input.trim()) return [];
 
-  return days.map((day, index) => {
-    const type = index === 10 ? 'event' : inferTypeFromDate(day);
-    const chapter = input.chapters[index % input.chapters.length] ?? `Chapter ${index + 1}`;
+  if (mode === 'chapters') {
+    return input.split('\n').map(c => c.trim()).filter(Boolean);
+  }
 
-    return {
-      date: formatISO(day, { representation: 'date' }),
-      dayIndex: index + 1,
-      label:
-        type === 'event'
-          ? 'Live integration event'
-          : type === 'implementation'
-            ? `Implementation: ${chapter}`
-            : type === 'catchup'
-              ? 'Catch-up and reflection'
-              : chapter,
-      description:
-        type === 'event'
-          ? 'Host a guided discussion or community event to compound the reading.'
-          : type === 'implementation'
-            ? 'Translate the reading into one visible action and record proof.'
-            : type === 'catchup'
-              ? 'Recover unfinished chapters and consolidate your notes.'
-              : 'Read, annotate, and extract the one decision that must change your behavior.',
-      type,
-      weight: getWeightForType(type),
-    };
-  });
+  const rawRanges = input.split('\n').map(range => {
+    const parts = range.split('-').map(s => s.trim());
+    const s = Number(parts[0]);
+    const e = Number(parts[1] ?? parts[0]);
+    return { start: s, end: e };
+  }).filter(p => !isNaN(p.start));
+
+  // Smart Split logic if only one range provided
+  if (rawRanges.length === 1 && totalReadingDays > 1) {
+    return performSmartSplit(rawRanges[0].start, rawRanges[0].end, totalReadingDays);
+  }
+
+  return rawRanges;
 }
 
 export async function generateScheduleDraft(input: {
   startDate: string;
   endDate: string;
-  chapters: string[];
+  input: string;
+  bookId: string;
+  mode: 'chapters' | 'pages';
   title: string;
-}) {
-  const parsed = createScheduleDraftSchema.parse(input);
+  totalPages?: number;
+  totalChapters?: number;
+}): Promise<ScheduleDraftItem[]> {
+  const start = new Date(`${input.startDate}T00:00:00Z`);
+  const end = new Date(`${input.endDate}T00:00:00Z`);
 
-  if (!process.env.OPENAI_API_KEY) {
-    return buildDeterministicDraft(parsed);
+  const totalDays = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+  const totalReadingDays = Math.ceil(totalDays / 2);
+
+  let units = parseInputUnits(input.input, input.mode, totalReadingDays);
+
+  // Fallback to book metadata if input is empty
+  if (units.length === 0) {
+    if (input.mode === 'chapters' && input.totalChapters) {
+      units = Array.from({ length: input.totalChapters }, (_, i) => `Chapter ${i + 1}`);
+    } else if (input.mode === 'pages' && input.totalPages) {
+      units = performSmartSplit(1, input.totalPages, totalReadingDays);
+    }
   }
 
-  const prompt = [
-    'Distribute these chapters across the available days.',
-    'Assign Fridays to catch-up.',
-    'Assign Saturdays to implementation.',
-    'Insert optional event days only when useful.',
-    'Return strict JSON in the form [{ date, dayIndex, label, description, type, weight }].',
-    `Title: ${parsed.title}`,
-    `Start date: ${parsed.startDate}`,
-    `End date: ${parsed.endDate}`,
-    `Chapters: ${parsed.chapters.join(' | ')}`,
-  ].join('\n');
+  const items: ScheduleDraftItem[] = [];
+  let current = new Date(start);
 
-  const response = await fetch(OPENAI_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: process.env.OPENAI_SCHEDULE_MODEL ?? 'gpt-4.1-mini',
-      input: prompt,
-      text: {
-        format: {
-          type: 'json_schema',
-          name: 'schedule_draft',
-          schema: {
-            type: 'array',
-            items: {
-              type: 'object',
-              additionalProperties: false,
-              required: ['date', 'dayIndex', 'label', 'description', 'type', 'weight'],
-              properties: {
-                date: { type: 'string' },
-                dayIndex: { type: 'number' },
-                label: { type: 'string' },
-                description: { type: 'string' },
-                type: {
-                  type: 'string',
-                  enum: ['reading', 'catchup', 'implementation', 'event'],
-                },
-                weight: { type: 'number' },
-              },
-            },
-          },
-        },
-      },
-    }),
-  });
+  for (let dayIndex = 1; dayIndex <= totalDays; dayIndex++) {
+    const isReadingDay = dayIndex % 2 === 1;
+    const readingDaySeq = (dayIndex + 1) / 2;
 
-  if (!response.ok) {
-    return buildDeterministicDraft(parsed);
+    if (isReadingDay) {
+      const prevPointer = Math.ceil(((readingDaySeq - 1) * units.length) / totalReadingDays);
+      const currPointer = Math.ceil((readingDaySeq * units.length) / totalReadingDays);
+      const slice = units.slice(prevPointer, currPointer);
+
+      if (slice.length > 0) {
+        let label: string;
+        let description: string;
+
+        if (input.mode === 'chapters') {
+          label = `Read: ${slice.join(', ')}`;
+          description = `Focus on extracting the core philosophy from: ${slice.join(', ')}`;
+        } else {
+          const first = slice[0] as { start: number; end: number };
+          const last = slice[slice.length - 1] as { start: number; end: number };
+          label = `Read pages ${first.start}-${last.end}`;
+          description = `Deep work session covering pages ${first.start}-${last.end}`;
+        }
+
+        items.push({
+          label,
+          description,
+          type: 'reading',
+          weight: 1,
+          date: current.toISOString().split('T')[0],
+          dayIndex,
+          book_id: input.bookId,
+        });
+      } else {
+        items.push({
+          label: 'Consolidation Day',
+          description: 'Review previous notes and prepare for integration.',
+          type: 'catchup',
+          weight: 0.5,
+          date: current.toISOString().split('T')[0],
+          dayIndex,
+          book_id: input.bookId,
+        });
+      }
+    } else {
+      items.push({
+        label: 'Reflection & Integration',
+        description: 'Translate the reading into one visible action and record proof.',
+        type: 'implementation',
+        weight: 1.5,
+        date: current.toISOString().split('T')[0],
+        dayIndex,
+        book_id: input.bookId,
+      });
+    }
+
+    current.setUTCDate(current.getUTCDate() + 1);
   }
 
-  const payload = await response.json();
-  const outputText = payload.output?.[0]?.content?.[0]?.text;
-
-  if (!outputText) {
-    return buildDeterministicDraft(parsed);
-  }
-
-  return JSON.parse(outputText) as ScheduleDraftItem[];
+  return items;
 }
