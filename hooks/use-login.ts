@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/client';
 import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 
-export function useLogin() {
+export function useLogin(redirectPath: string = '/bookclub/dashboard') {
   const router = useRouter();
 
   const mutation = useMutation({
@@ -32,7 +32,7 @@ export function useLogin() {
     onSuccess: () => {
       toast.success('Successfully logged in.');
       router.refresh();
-      router.push('/dashboard');
+      router.push(redirectPath);
     },
     onError: (error) => {
       toast.error(error.message);

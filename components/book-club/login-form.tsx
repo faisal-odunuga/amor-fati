@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLogin } from '@/hooks/use-login';
 
-export function LoginForm() {
-  const { isPending, submit } = useLogin();
+export function LoginForm({ redirectPath }: { redirectPath?: string }) {
+  const { isPending, submit } = useLogin(redirectPath);
 
   return (
     <div className='rounded-xl border border-black/10 bg-white p-8 shadow-[0_25px_70px_rgba(0,0,0,0.06)] sm:p-12'>

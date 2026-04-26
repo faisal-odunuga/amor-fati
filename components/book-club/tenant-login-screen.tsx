@@ -4,9 +4,10 @@ type TenantLoginScreenProps = {
   eyebrow?: string;
   title?: string;
   description?: string;
+  redirectPath?: string;
 };
 
-export function TenantLoginScreen({ eyebrow, title, description }: TenantLoginScreenProps) {
+export function TenantLoginScreen({ eyebrow, title, description, redirectPath }: TenantLoginScreenProps) {
   return (
     <main className='min-h-screen bg-[#faf7f1] px-6 py-16 flex items-center justify-center relative overflow-hidden'>
       {/* Decorative background elements */}
@@ -23,7 +24,7 @@ export function TenantLoginScreen({ eyebrow, title, description }: TenantLoginSc
         </div>
         
         <div className='w-full max-w-md mx-auto'>
-          <LoginForm />
+          <LoginForm redirectPath={redirectPath} />
         </div>
       </div>
     </main>

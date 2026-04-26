@@ -6,6 +6,7 @@ export default function AdminLoginPage() {
       eyebrow='Admin Access'
       title='Enter the control room.'
       description='This login is for operators managing plans, analytics, resources, and pending transformation proof across the platform.'
+      redirectPath='/admin/dashboard'
     />
   );
 }
