@@ -51,6 +51,15 @@ export const metadata: Metadata = {
     'Luxury mindset systems, transformation programs, and the Amor Fati book club platform.',
   icons: {
     icon: '/favicon.ico',
+    apple: '/logo.png',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Amor Fati',
+  },
+  formatDetection: {
+    telephone: false,
   },
 };
 
@@ -69,6 +78,7 @@ export default function RootLayout({
         </QueryProvider>
         <Analytics debug={false} />
         <Toaster />
+        <InstallPWA />
       </body>
     </html>
   );

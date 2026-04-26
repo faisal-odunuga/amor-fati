@@ -1,3 +1,4 @@
+import { SignOutRedirectButton } from '@/components/book-club/sign-out-redirect-button';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ShieldAlert } from 'lucide-react';
@@ -26,11 +27,17 @@ export default function ForbiddenPage() {
         </p>
         
         <div className='flex flex-col sm:flex-row items-center justify-center gap-4'>
-          <Button
-            asChild
+          <SignOutRedirectButton
             className='w-full sm:w-auto h-12 rounded-none bg-black px-8 font-bold uppercase tracking-widest text-white hover:bg-black/80'
           >
-            <Link href='/'>Return to Home</Link>
+            Sign In with Different Account
+          </SignOutRedirectButton>
+          <Button
+            asChild
+            variant='outline'
+            className='w-full sm:w-auto h-12 rounded-none border-black/10 bg-white px-8 font-bold uppercase tracking-widest text-black hover:bg-[#faf7f1]'
+          >
+            <a href='https://amorfatihq.com'>Main Site</a>
           </Button>
         </div>
       </div>

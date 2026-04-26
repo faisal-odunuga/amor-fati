@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/client';
 import { toast } from 'sonner';
 import { useMutation } from '@tanstack/react-query';
 
-export function useLogin(redirectPath: string = '/bookclub/dashboard') {
+export function useLogin(redirectPath: string = '/bookclub/dashboard', requiredRole?: 'member' | 'admin') {
   const router = useRouter();
 
   const mutation = useMutation({
@@ -18,19 +18,37 @@ export function useLogin(redirectPath: string = '/bookclub/dashboard') {
       const email = String(formData.get('email') || '');
       const password = String(formData.get('password') || '');
 
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) {
-        throw new Error(error.message);
+      if (authError) {
+        throw new Error(authError.message);
+      }
+
+      if (requiredRole && authData.user) {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', authData.user.id)
+          .single();
+
+        if (requiredRole === 'admin' && profile?.role !== 'admin') {
+          await supabase.auth.signOut();
+          throw new Error('This account does not have administrator privileges.');
+        }
+
+        if (requiredRole === 'member' && profile?.role !== 'member' && profile?.role !== 'admin') {
+          await supabase.auth.signOut();
+          throw new Error('This account does not have member privileges.');
+        }
       }
 
       return true;
     },
     onSuccess: () => {
-      toast.success('Successfully logged in.');
+      toast.success('Identity verified. Access granted.');
       router.refresh();
       router.push(redirectPath);
     },
