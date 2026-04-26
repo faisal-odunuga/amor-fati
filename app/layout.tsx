@@ -5,6 +5,7 @@ import { GeistMono } from 'geist/font/mono';
 import { Analytics } from '@vercel/analytics/next';
 import { Toaster } from 'sonner';
 import QueryProvider from '@/components/providers/query-provider';
+import { InstallPWA } from '@/components/ui/install-pwa';
 import './globals.css';
 
 const display = localFont({
