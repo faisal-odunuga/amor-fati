@@ -11,7 +11,7 @@ export default async function MemberLogPage() {
 
   return (
     <BookClubShell>
-    <div className='grid gap-8 xl:grid-cols-[1.05fr_0.95fr]'>
+    <div className='grid gap-4 sm:gap-6 lg:gap-8 lg:grid-cols-[1fr_1fr]'>
       <div>
         <p className='text-xs uppercase tracking-[0.3em] text-[#d9a517]'>Proof of Work</p>
         <h1 className='mt-3 font-serif text-5xl text-black'>Log visible execution</h1>

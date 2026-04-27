@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import type { ResourceAsset } from '@/lib/book-club/types';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { PlatformSection } from '../ui/platform-section';
 
 function ResourceRow({ resource }: { resource: ResourceAsset }) {
   const mutation = useMutation({

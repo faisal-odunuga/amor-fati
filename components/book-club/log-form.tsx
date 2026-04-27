@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import type { ReadingPlan, ScheduleItem } from '@/lib/book-club/types';
 import { useLogSubmission } from '@/hooks/use-log-submission';
+import { format, parseISO } from 'date-fns';
 
 type LogFormProps = {
   plan: ReadingPlan;
@@ -16,6 +17,9 @@ type LogFormProps = {
 export function LogForm({ plan, scheduleItems }: LogFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const { isPending, submit, isSuccess } = useLogSubmission(plan);
+
+  const today = new Date().toISOString().split('T')[0];
+  const defaultItem = scheduleItems.find(item => item.date.startsWith(today));
 
   return (
     <form
@@ -27,7 +31,7 @@ export function LogForm({ plan, scheduleItems }: LogFormProps) {
           }
         });
       }}
-      className='border border-border bg-background p-8'
+      className='border border-border bg-background p-4 sm:p-6 lg:p-8'
     >
       <div className='grid gap-6 lg:grid-cols-2'>
         <label className='space-y-3'>
@@ -36,10 +40,11 @@ export function LogForm({ plan, scheduleItems }: LogFormProps) {
             name='scheduleItemId'
             className='flex h-12 w-full rounded-none border border-border bg-secondary/20 px-4 text-sm outline-none'
             required
+            defaultValue={defaultItem?.id}
           >
             {scheduleItems.map((item) => (
               <option key={item.id} value={item.id}>
-                {item.label} · {item.date}
+                {format(parseISO(item.date), 'EEE dd, MMM')}({item.label})
               </option>
             ))}
           </select>

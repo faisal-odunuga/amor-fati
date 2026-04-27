@@ -7,7 +7,7 @@ export function InsightFeed() {
   const { data: logs, isLoading, isError } = useLogs();
 
   return (
-    <section className='border border-border bg-background p-6'>
+    <section className='border border-border bg-background p-6 w-full max-w-full overflow-hidden'>
       <p className='text-xs font-bold uppercase tracking-[0.3em] text-primary'>Proof Feed</p>
       
       {isLoading ? (
@@ -25,15 +25,15 @@ export function InsightFeed() {
       ) : (
         <div className='mt-6 space-y-4'>
           {logs?.slice(-6).reverse().map((log) => (
-            <article key={log.id} className='border border-border bg-secondary/20 p-5'>
+            <article key={log.id} className='border border-border bg-secondary/20 p-4 sm:p-5 max-w-full overflow-hidden'>
               <p className='text-sm text-muted-foreground'>{new Date(log.createdAt).toLocaleDateString()}</p>
-              <h4 className='mt-3 text-lg font-medium text-foreground truncate'>
-                <a href={log.nestugeUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+              <h4 className='mt-3 text-lg font-medium text-foreground'>
+                <a href={log.nestugeUrl} target="_blank" rel="noopener noreferrer" className="hover:underline break-all block max-w-full overflow-hidden text-ellipsis">
                   {log.nestugeUrl}
                 </a>
               </h4>
               {log.desc && (
-                <p className='mt-2 text-sm leading-relaxed text-muted-foreground'>{log.desc}</p>
+                <p className='mt-2 text-sm leading-relaxed text-muted-foreground break-words'>{log.desc}</p>
               )}
             </article>
           ))}

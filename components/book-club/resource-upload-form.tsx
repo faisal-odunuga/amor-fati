@@ -4,6 +4,7 @@ import { LoaderCircle, Upload } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { PlatformSection } from '@/components/ui/platform-section';
 import { useResourceUpload } from '@/hooks/use-resource-upload';
 
 export function ResourceUploadForm() {

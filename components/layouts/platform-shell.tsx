@@ -28,7 +28,7 @@ export function PlatformShell({
   children,
 }: PlatformShellProps) {
   return (
-    <div className='min-h-screen bg-background text-foreground'>
+    <div className='min-h-screen bg-background text-foreground '>
       <header className='sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur-md'>
         <div className='mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-5'>
           <div className='flex items-center gap-4'>
@@ -62,7 +62,7 @@ export function PlatformShell({
         </div>
       </header>
 
-      <main>
+      <main className='overflow-x-hidden'>
         <section className='px-4 py-8 pb-28 sm:px-6 sm:py-12 sm:pb-16 lg:py-16'>
           <div className='mx-auto max-w-7xl'>{children}</div>
         </section>
