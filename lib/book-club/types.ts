@@ -20,7 +20,7 @@ export type Book = {
   id: string;
   title: string;
   author: string;
-  coverUrl: string;
+  coverUrl: string | null;
   pdfUrl: string | null;
   description: string;
   totalPages: number | null;
@@ -35,6 +35,8 @@ export type ReadingPlan = {
   title: string;
   isActive: boolean;
   totalWeight: number;
+  startDate: string | null;
+  endDate: string | null;
 };
 
 export type ScheduleItem = {
@@ -118,8 +120,13 @@ export type ScheduleDraftItem = Pick<
   ScheduleItem,
   'date' | 'label' | 'description' | 'type' | 'weight'
 > & {
+  id?: string;
   dayIndex: number;
   book_id?: string;
+};
+
+export type AdminEditablePlan = ReadingPlan & {
+  items: ScheduleDraftItem[];
 };
 
 export type AdminAnalytics = {
@@ -149,6 +156,21 @@ export const savePlanSchema = z.object({
   bookId: z.string().uuid().optional(),
   monthDate: z.string().date(),
   title: z.string().min(3),
+  items: z.array(
+    z.object({
+      date: z.string().date(),
+      dayIndex: z.number().int().nonnegative(),
+      label: z.string().min(1),
+      description: z.string().min(1),
+      type: scheduleItemTypeSchema,
+      weight: z.number().positive(),
+    }),
+  ),
+});
+
+export const updatePlanSchema = z.object({
+  title: z.string().min(3),
+  monthDate: z.string().date(),
   items: z.array(
     z.object({
       date: z.string().date(),

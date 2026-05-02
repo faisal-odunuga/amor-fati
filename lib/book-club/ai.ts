@@ -43,6 +43,28 @@ function parseInputUnits(input: string, mode: 'chapters' | 'pages', totalReading
   return rawRanges;
 }
 
+function formatReadingLabel(
+  slice: Array<string | { start: number; end: number }>,
+  mode: 'chapters' | 'pages'
+) {
+  if (mode === 'chapters') {
+    const chapters = slice as string[];
+    return {
+      label: `Read: ${chapters.join(', ')}`,
+      description: `Read and capture the key ideas from ${chapters.join(', ')}.`,
+    };
+  }
+
+  const ranges = slice as Array<{ start: number; end: number }>;
+  const first = ranges[0];
+  const last = ranges.at(-1)!;
+
+  return {
+    label: `Read pages ${first.start}-${last.end}`,
+    description: `Read pages ${first.start}-${last.end} and document the core takeaways.`,
+  };
+}
+
 export async function generateScheduleDraft(input: {
   startDate: string;
   endDate: string;
@@ -57,7 +79,21 @@ export async function generateScheduleDraft(input: {
   const end = new Date(`${input.endDate}T00:00:00Z`);
 
   const totalDays = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
-  const totalReadingDays = Math.ceil(totalDays / 2);
+  const readingDates: string[] = [];
+  const dates: Date[] = [];
+
+  for (let offset = 0; offset < totalDays; offset++) {
+    const current = new Date(start);
+    current.setUTCDate(start.getUTCDate() + offset);
+    dates.push(current);
+
+    const weekday = current.getUTCDay();
+    if (weekday >= 1 && weekday <= 5) {
+      readingDates.push(current.toISOString().split('T')[0]);
+    }
+  }
+
+  const totalReadingDays = readingDates.length;
 
   let units = parseInputUnits(input.input, input.mode, totalReadingDays);
 
@@ -71,64 +107,81 @@ export async function generateScheduleDraft(input: {
   }
 
   const items: ScheduleDraftItem[] = [];
-  let current = new Date(start);
+  for (let dayIndex = 0; dayIndex < dates.length; dayIndex++) {
+    const current = dates[dayIndex];
+    const date = current.toISOString().split('T')[0];
+    const weekday = current.getUTCDay();
 
-  for (let dayIndex = 1; dayIndex <= totalDays; dayIndex++) {
-    const isReadingDay = dayIndex % 2 === 1;
-    const readingDaySeq = (dayIndex + 1) / 2;
-
-    if (isReadingDay) {
-      const prevPointer = Math.ceil(((readingDaySeq - 1) * units.length) / totalReadingDays);
-      const currPointer = Math.ceil((readingDaySeq * units.length) / totalReadingDays);
+    if (weekday >= 1 && weekday <= 5) {
+      const readingDaySeq = readingDates.indexOf(date) + 1;
+      const prevPointer = Math.ceil(((readingDaySeq - 1) * units.length) / Math.max(totalReadingDays, 1));
+      const currPointer = Math.ceil((readingDaySeq * units.length) / Math.max(totalReadingDays, 1));
       const slice = units.slice(prevPointer, currPointer);
+      const fallbackStart = units.at(Math.max(prevPointer - 1, 0));
 
       if (slice.length > 0) {
-        let label: string;
-        let description: string;
-
-        if (input.mode === 'chapters') {
-          label = `Read: ${slice.join(', ')}`;
-          description = `Focus on extracting the core philosophy from: ${slice.join(', ')}`;
-        } else {
-          const first = slice[0] as { start: number; end: number };
-          const last = slice[slice.length - 1] as { start: number; end: number };
-          label = `Read pages ${first.start}-${last.end}`;
-          description = `Deep work session covering pages ${first.start}-${last.end}`;
-        }
-
+        const { label, description } = formatReadingLabel(slice, input.mode);
         items.push({
           label,
           description,
           type: 'reading',
           weight: 1,
-          date: current.toISOString().split('T')[0],
-          dayIndex,
+          date,
+          dayIndex: dayIndex + 1,
           book_id: input.bookId,
         });
-      } else {
-        items.push({
-          label: 'Consolidation Day',
-          description: 'Review previous notes and prepare for integration.',
-          type: 'catchup',
-          weight: 0.5,
-          date: current.toISOString().split('T')[0],
-          dayIndex,
-          book_id: input.bookId,
-        });
+        continue;
       }
-    } else {
+
+      if (fallbackStart) {
+        const fallbackSlice = [fallbackStart];
+        const { label, description } = formatReadingLabel(fallbackSlice, input.mode);
+        items.push({
+          label: `${label} review`,
+          description: `Use this slot to review earlier reading, notes, and highlights. ${description}`,
+          type: 'reading',
+          weight: 1,
+          date,
+          dayIndex: dayIndex + 1,
+          book_id: input.bookId,
+        });
+        continue;
+      }
+
       items.push({
-        label: 'Reflection & Integration',
-        description: 'Translate the reading into one visible action and record proof.',
-        type: 'implementation',
-        weight: 1.5,
-        date: current.toISOString().split('T')[0],
-        dayIndex,
+        label: 'Reading Review',
+        description: 'Review prior notes, underline major ideas, and prepare for the weekend checkpoints.',
+        type: 'reading',
+        weight: 1,
+        date,
+        dayIndex: dayIndex + 1,
         book_id: input.bookId,
       });
+      continue;
     }
 
-    current.setUTCDate(current.getUTCDate() + 1);
+    if (weekday === 6) {
+      items.push({
+        label: 'Catch-up Day',
+        description: 'Close any missed reading, clean up annotations, and prepare your weekly summary.',
+        type: 'catchup',
+        weight: 0.5,
+        date,
+        dayIndex: dayIndex + 1,
+        book_id: input.bookId,
+      });
+      continue;
+    }
+
+    items.push({
+      label: 'Implementation & Documentation',
+      description: 'Turn the week’s reading into action, document the result, and capture proof of execution.',
+      type: 'implementation',
+      weight: 1.5,
+      date,
+      dayIndex: dayIndex + 1,
+      book_id: input.bookId,
+    });
   }
 
   return items;

@@ -6,9 +6,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { AdminPlanPreviewTable } from '@/components/book-club/admin-plan-preview-table';
 import { usePlanGenerator } from '@/hooks/use-plan-generator';
+import type { Book } from '@/lib/book-club/types';
 import { cn } from '@/utils';
 
-export function AdminPlanGenerator({ books }: { books: any[] }) {
+export function AdminPlanGenerator({ books }: { books: Book[] }) {
   const {
     items,
     title,
@@ -18,7 +19,6 @@ export function AdminPlanGenerator({ books }: { books: any[] }) {
     generateDraft,
     saveDraft,
     updateItem,
-    moveItem,
   } = usePlanGenerator();
 
   const commonInputStyles = 'h-12 rounded-none border-black/10 bg-[#faf7f1] focus-visible:ring-primary/20';
@@ -99,7 +99,6 @@ export function AdminPlanGenerator({ books }: { books: any[] }) {
         onTitleChange={setTitle}
         onSave={saveDraft}
         onItemUpdate={updateItem}
-        onMoveItem={moveItem}
       />
     </div>
   );

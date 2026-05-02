@@ -1,41 +1,33 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { hasSupabaseEnv } from '@/lib/book-club/queries';
+import { getAuthorizedContext } from '@/lib/book-club/server-access';
 import { createDailyLogSchema } from '@/lib/book-club/types';
 
 export async function POST(request: Request) {
   try {
     const body = createDailyLogSchema.parse(await request.json());
-
-    if (!hasSupabaseEnv()) {
-      return NextResponse.json({ error: 'Supabase environment variables are missing.' }, { status: 500 });
-    }
-
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const auth = await getAuthorizedContext('member');
+    if ('response' in auth) return auth.response;
 
     // Derive log_date from the schedule item's date (never user input)
-    const { data: scheduleItem, error: siError } = await supabase
+    const { data: scheduleItem, error: siError } = await auth.supabase
       .from('schedule_items')
-      .select('date')
+      .select('date, plan_id')
       .eq('id', body.scheduleItemId)
       .single();
 
     if (siError || !scheduleItem) {
+      return NextResponse.json({ error: 'Schedule item not found.' }, { status: 404 });
+    }
+
+    if (scheduleItem.plan_id !== body.planId) {
       return NextResponse.json(
-        { error: 'Schedule item not found.' },
-        { status: 404 }
+        { error: 'Schedule item does not belong to the selected plan.' },
+        { status: 400 }
       );
     }
 
-    const { error, data } = await supabase.from('daily_logs').insert({
-      profile_id: user.id,
+    const { error } = await auth.supabase.from('daily_logs').insert({
+      profile_id: auth.user.id,
       schedule_item_id: body.scheduleItemId,
       plan_id: body.planId,
       nestuge_url: body.nestugeUrl,
@@ -44,7 +36,6 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      console.log(error, data);
       const duplicate = error.message.toLowerCase().includes('unique');
       return NextResponse.json(
         { error: duplicate ? 'You have already logged progress for this item.' : error.message },

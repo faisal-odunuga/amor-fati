@@ -2,14 +2,13 @@ import { MetricCard } from '@/components/book-club/metric-card';
 import { ProgressSpotlight } from '@/components/book-club/progress-spotlight';
 import { InsightFeed } from '@/components/book-club/insight-feed';
 import { BookClubShell } from '@/components/layouts/bookclub-shell';
-import { getActiveReadingPlan, getDailyLogs, getUserProgress } from '@/lib/book-club/queries';
+import { getActiveReadingPlan, getUserProgress } from '@/lib/book-club/queries';
 import { calculateWeightedProgressFromCompletedWeight } from '@/lib/book-club/progress';
 
 export default async function MemberProgressPage() {
-  const [plan, progress, logs] = await Promise.all([
+  const [plan, progress] = await Promise.all([
     getActiveReadingPlan(),
     getUserProgress(),
-    getDailyLogs(),
   ]);
   if (!plan) {
     return (
@@ -50,7 +49,7 @@ export default async function MemberProgressPage() {
         milestone={percentage >= 100 ? 'Completion state' : percentage >= 70 ? 'Testimonial threshold' : 'Momentum building'}
       />
 
-      <InsightFeed logs={logs.slice(-8).reverse()} />
+      <InsightFeed />
     </div>
     </BookClubShell>
   );

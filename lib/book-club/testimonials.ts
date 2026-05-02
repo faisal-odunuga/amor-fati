@@ -1,8 +1,7 @@
-import type { DailyLog, Profile, ReadingPlan } from '@/lib/book-club/types';
+import type { DailyLog, Profile } from '@/lib/book-club/types';
 
 export function buildGeneratedTestimonial(params: {
   profile: Profile;
-  plan: ReadingPlan;
   completedDays: number;
   keyInsight?: string | null;
   actionTaken?: string | null;
@@ -15,9 +14,9 @@ export function buildGeneratedTestimonial(params: {
 }
 
 export function getLastInsight(logs: DailyLog[]) {
-  return logs.at(-1)?.keyInsight ?? null;
+  return logs.at(-1)?.desc ?? null;
 }
 
 export function getLastAction(logs: DailyLog[]) {
-  return logs.at(-1)?.actionTaken ?? null;
+  return logs.at(-1)?.nestugeUrl ?? null;
 }

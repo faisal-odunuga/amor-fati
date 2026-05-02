@@ -19,6 +19,10 @@ export async function POST() {
       getDailyLogs(),
     ]);
 
+    if (!plan) {
+      return NextResponse.json({ error: 'No active plan.' }, { status: 400 });
+    }
+
     const percentage = calculateWeightedProgressFromCompletedWeight(
       progress.totalWeightCompleted,
       plan.totalWeight
@@ -30,7 +34,6 @@ export async function POST() {
 
     const generatedText = buildGeneratedTestimonial({
       profile,
-      plan,
       completedDays: progress.completedDays,
       keyInsight: getLastInsight(logs),
       actionTaken: getLastAction(logs),

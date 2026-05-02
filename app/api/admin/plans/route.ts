@@ -1,32 +1,14 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
-import { hasSupabaseEnv } from '@/lib/book-club/queries';
+import { getAuthorizedContext } from '@/lib/book-club/server-access';
 import { savePlanSchema } from '@/lib/book-club/types';
 
 export async function POST(request: Request) {
   try {
     const body = savePlanSchema.parse(await request.json());
+    const auth = await getAuthorizedContext('admin');
+    if ('response' in auth) return auth.response;
 
-    if (!hasSupabaseEnv()) {
-      return NextResponse.json({ error: 'Supabase environment variables are missing.' }, { status: 500 });
-    }
-
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single();
-
-    if (profile?.role !== 'admin') {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-    }
-
-    const { data: plan, error: planError } = await supabase
+    const { data: plan, error: planError } = await auth.supabase
       .from('reading_plans')
       .insert({
         book_id: body.bookId ?? null,
@@ -41,7 +23,7 @@ export async function POST(request: Request) {
       throw planError ?? new Error('Unable to create plan.');
     }
 
-    const { error: itemError } = await supabase.from('schedule_items').insert(
+    const { error: itemError } = await auth.supabase.from('schedule_items').insert(
       body.items.map((item) => ({
         plan_id: plan.id,
         date: item.date,

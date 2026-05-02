@@ -16,14 +16,16 @@ import {
   getLeaderboard,
   getMissedDays,
   getCurrentProfile,
+  getUpcomingReadingPlan,
 } from '@/lib/book-club/queries';
 import { calculateWeightedProgressFromCompletedWeight } from '@/lib/book-club/progress';
 
 export default async function MemberDashboardPage() {
   const profile = await getCurrentProfile();
   
-  const [plan, book, progress, streak, scheduleItems, logs, leaderboard, missedDays] = await Promise.all([
+  const [plan, upcomingPlan, book, progress, streak, scheduleItems, logs, leaderboard, missedDays] = await Promise.all([
     getActiveReadingPlan(),
+    getUpcomingReadingPlan(),
     getCurrentBook(),
     getUserProgress(),
     getStreak(),
@@ -41,9 +43,16 @@ export default async function MemberDashboardPage() {
         <div className='rounded-xl border border-dashed border-black/10 bg-white p-12 text-center shadow-[0_25px_70px_rgba(0,0,0,0.06)]'>
           <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-[#d9a517] mb-4'>Status Offline</p>
           <h2 className='font-serif text-3xl text-black mb-4'>No Active Schedule</h2>
-          <p className='max-w-md mx-auto text-sm text-black/65'>
-            There is currently no active reading cycle. Check back soon or contact the administrator if you believe this is an error.
-          </p>
+          {upcomingPlan?.startDate ? (
+            <p className='max-w-xl mx-auto text-sm text-black/65'>
+              The previous reading cycle has ended. The next published plan is <span className='font-medium text-black'>{upcomingPlan.title}</span>,
+              starting on <span className='font-medium text-black'>{format(parseISO(upcomingPlan.startDate), 'MMMM d, yyyy')}</span>.
+            </p>
+          ) : (
+            <p className='max-w-md mx-auto text-sm text-black/65'>
+              There is currently no active reading cycle. Check back soon or contact the administrator if you believe this is an error.
+            </p>
+          )}
         </div>
       </BookClubShell>
     );

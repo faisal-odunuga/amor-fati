@@ -7,6 +7,7 @@ import type { DailyLog } from '@/lib/book-club/types';
 export function useLogs(profileId?: string) {
   return useQuery({
     queryKey: ['logs', profileId],
+    staleTime: 30 * 1000,
     queryFn: async (): Promise<DailyLog[]> => {
       const supabase = createClient();
       

@@ -1,16 +1,14 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { ScheduleDraftItem } from '@/lib/book-club/types';
 import { toast } from 'sonner';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function usePlanGenerator() {
   const [items, setItems] = useState<ScheduleDraftItem[]>([]);
-  const [title, setTitle] = useState('New Monthly Plan');
+  const [title, setTitle] = useState('New Reading Plan');
   const queryClient = useQueryClient();
-
-  const monthDate = useMemo(() => items[0]?.date ?? '', [items]);
 
   const generateDraftMutation = useMutation({
     mutationFn: async (formData: FormData) => {
@@ -81,21 +79,6 @@ export function usePlanGenerator() {
     );
   }
 
-  function moveItem(index: number, direction: -1 | 1) {
-    setItems((current) => {
-      const nextIndex = index + direction;
-
-      if (nextIndex < 0 || nextIndex >= current.length) {
-        return current;
-      }
-
-      const reordered = [...current];
-      const [item] = reordered.splice(index, 1);
-      reordered.splice(nextIndex, 0, item);
-      return reordered.map((entry, itemIndex) => ({ ...entry, dayIndex: itemIndex + 1 }));
-    });
-  }
-
   return {
     items,
     title,
@@ -105,6 +88,5 @@ export function usePlanGenerator() {
     generateDraft: generateDraftMutation.mutate,
     saveDraft: saveDraftMutation.mutate,
     updateItem,
-    moveItem,
   };
 }

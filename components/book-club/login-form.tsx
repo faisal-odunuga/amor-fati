@@ -3,6 +3,7 @@
 import { LoaderCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { useLogin } from '@/hooks/use-login';
 
 export function LoginForm({ 
@@ -38,9 +39,8 @@ export function LoginForm({
 
         <label className='block'>
           <span className='mb-2.5 block text-[10px] font-bold uppercase tracking-[0.25em] text-black/45'>Password</span>
-          <Input
+          <PasswordInput
             name='password'
-            type='password'
             required
             placeholder='••••••••'
             className='h-12 rounded-none border-black/10 bg-[#faf7f1] focus-visible:ring-primary/20'

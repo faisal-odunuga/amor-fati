@@ -1,5 +1,6 @@
 import {
   BarChart3,
+  BookText,
   BookOpenCheck,
   ClipboardCheck,
   LayoutDashboard,
@@ -22,6 +23,7 @@ export const GOLD = '#d9a517';
 
 export const iconMap = {
   dashboard: LayoutDashboard,
+  books: BookText,
   schedule: BookOpenCheck,
   log: ClipboardCheck,
   progress: BarChart3,
@@ -42,6 +44,7 @@ export type PlatformNavItem = {
 
 export const BOOKCLUB_SIDENAV: PlatformNavItem[] = [
   { href: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
+  { href: '/books', label: 'Books', icon: 'books' },
   { href: '/schedule', label: 'Schedule', icon: 'schedule' },
   { href: '/log', label: 'Proof of Work', icon: 'log' },
   { href: '/progress', label: 'Progress', icon: 'progress' },
@@ -49,6 +52,7 @@ export const BOOKCLUB_SIDENAV: PlatformNavItem[] = [
 
 export const ADMIN_SIDENAV: PlatformNavItem[] = [
   { href: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
+  { href: '/books', label: 'Books', icon: 'books' },
   { href: '/plans', label: 'Plans', icon: 'plans' },
   { href: '/members', label: 'Members', icon: 'members' },
   { href: '/logs', label: 'Logs', icon: 'logs' },

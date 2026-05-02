@@ -1,118 +1,101 @@
 'use client';
 
-import { GripVertical, LoaderCircle } from 'lucide-react';
+import {
+  eachDayOfInterval,
+  endOfWeek,
+  format,
+  isSameDay,
+  parseISO,
+  startOfWeek,
+} from 'date-fns';
+import { LoaderCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/utils';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import type { ScheduleDraftItem, ScheduleItemType } from '@/lib/book-club/types';
 
 const TYPE_OPTIONS: ScheduleItemType[] = ['reading', 'catchup', 'implementation', 'event'];
+const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-function MobileScheduleCard({ 
-  item, 
-  index, 
-  onItemUpdate, 
-  onMoveItem 
-}: { 
-  item: ScheduleDraftItem; 
-  index: number; 
+function buildCalendarWeeks(items: ScheduleDraftItem[]) {
+  const sorted = [...items].sort((a, b) => a.date.localeCompare(b.date));
+  const first = parseISO(sorted[0].date);
+  const last = parseISO(sorted.at(-1)!.date);
+  const rangeStart = startOfWeek(first, { weekStartsOn: 1 });
+  const rangeEnd = endOfWeek(last, { weekStartsOn: 1 });
+  const days = eachDayOfInterval({ start: rangeStart, end: rangeEnd });
+
+  const weeks: Array<
+    Array<{
+      date: Date;
+      item: ScheduleDraftItem | null;
+      itemIndex: number;
+    }>
+  > = [];
+
+  for (let index = 0; index < days.length; index += 7) {
+    const week = days.slice(index, index + 7).map((date) => {
+      const itemIndex = sorted.findIndex((entry) => isSameDay(parseISO(entry.date), date));
+      return {
+        date,
+        item: itemIndex >= 0 ? sorted[itemIndex] : null,
+        itemIndex,
+      };
+    });
+
+    weeks.push(week);
+  }
+
+  return weeks;
+}
+
+function MobileScheduleCard({
+  item,
+  index,
+  onItemUpdate,
+}: {
+  item: ScheduleDraftItem;
+  index: number;
   onItemUpdate: (index: number, patch: Partial<ScheduleDraftItem>) => void;
-  onMoveItem: (index: number, direction: -1 | 1) => void;
 }) {
-  const commonInputStyles = 'h-10 rounded-none border-black/10 bg-[#faf7f1] focus-visible:ring-primary/20';
+  const commonInputStyles = 'rounded-none border-black/10 bg-[#faf7f1] focus-visible:ring-primary/20';
 
   return (
-    <div className='flex flex-col gap-4 border-b border-black/5 p-4 lg:hidden'>
-      <div className='flex items-center justify-between'>
-        <span className='text-[10px] font-bold uppercase tracking-widest text-black/40'>Day {item.dayIndex}</span>
-        <div className='flex items-center gap-2'>
-          <button type='button' onClick={() => onMoveItem(index, -1)} className='p-1'><GripVertical className='size-4 text-black/35' /></button>
-          <button type='button' onClick={() => onMoveItem(index, 1)} className='p-1'><GripVertical className='size-4 rotate-180 text-black/35' /></button>
-        </div>
+    <div className='flex flex-col gap-3 border-b border-black/5 p-4 last:border-b-0 lg:hidden'>
+      <div className='flex items-center justify-between gap-3'>
+        <span className='text-[10px] font-bold uppercase tracking-widest text-black/40'>
+          Day {item.dayIndex} • {format(parseISO(item.date), 'EEE, MMM d')}
+        </span>
+        <span className='text-[9px] uppercase tracking-[0.2em] text-black/35'>{item.type}</span>
       </div>
-      
-      <div className='grid gap-3'>
-        <Input 
-          value={item.date} 
-          onChange={(e) => onItemUpdate(index, { date: e.target.value })} 
-          placeholder='Date' 
-          className={commonInputStyles} 
-        />
-        <Input 
-          value={item.label} 
-          onChange={(e) => onItemUpdate(index, { label: e.target.value })} 
-          placeholder='Label' 
-          className={commonInputStyles} 
-        />
+      <Input value={item.label} onChange={(e) => onItemUpdate(index, { label: e.target.value })} className={cn(commonInputStyles, 'h-10')} />
+      <Textarea
+        value={item.description}
+        onChange={(e) => onItemUpdate(index, { description: e.target.value })}
+        className={cn(commonInputStyles, 'min-h-[88px]')}
+      />
+      <div className='grid grid-cols-2 gap-3'>
         <select
           value={item.type}
           onChange={(e) => onItemUpdate(index, { type: e.target.value as ScheduleItemType })}
-          className={cn(commonInputStyles, 'w-full px-3 text-sm')}
+          className={cn(commonInputStyles, 'h-10 w-full px-3 text-sm')}
         >
-          {TYPE_OPTIONS.map((t) => <option key={t} value={t}>{t}</option>)}
+          {TYPE_OPTIONS.map((type) => (
+            <option key={type} value={type}>
+              {type}
+            </option>
+          ))}
         </select>
-        <Input 
-          value={item.description} 
-          onChange={(e) => onItemUpdate(index, { description: e.target.value })} 
-          placeholder='Description' 
-          className={commonInputStyles} 
-        />
-        <Input 
+        <Input
           type='number'
-          value={item.weight} 
-          onChange={(e) => onItemUpdate(index, { weight: Number(e.target.value) })} 
-          placeholder='Weight' 
-          className={commonInputStyles} 
+          step='0.25'
+          value={item.weight}
+          onChange={(e) => onItemUpdate(index, { weight: Number(e.target.value) })}
+          className={cn(commonInputStyles, 'h-10')}
         />
       </div>
     </div>
-  );
-}
-
-function DesktopScheduleRow({ 
-  item, 
-  index, 
-  onItemUpdate, 
-  onMoveItem 
-}: { 
-  item: ScheduleDraftItem; 
-  index: number; 
-  onItemUpdate: (index: number, patch: Partial<ScheduleDraftItem>) => void;
-  onMoveItem: (index: number, direction: -1 | 1) => void;
-}) {
-  const commonInputStyles = 'h-10 rounded-none border-black/10 bg-[#faf7f1] focus-visible:ring-primary/20';
-
-  return (
-    <TableRow className='hidden lg:table-row'>
-      <TableCell>
-        <div className='flex items-center gap-2'>
-          <button type='button' onClick={() => onMoveItem(index, -1)}><GripVertical className='size-4 text-black/35' /></button>
-          <button type='button' onClick={() => onMoveItem(index, 1)}><GripVertical className='size-4 rotate-180 text-black/35' /></button>
-          {item.dayIndex}
-        </div>
-      </TableCell>
-      <TableCell><Input value={item.date} onChange={(e) => onItemUpdate(index, { date: e.target.value })} className={cn(commonInputStyles, 'min-w-32')} /></TableCell>
-      <TableCell><Input value={item.label} onChange={(e) => onItemUpdate(index, { label: e.target.value })} className={cn(commonInputStyles, 'min-w-52')} /></TableCell>
-      <TableCell>
-        <select
-          value={item.type}
-          onChange={(e) => onItemUpdate(index, { type: e.target.value as ScheduleItemType })}
-          className={cn(commonInputStyles, 'h-10 px-3 text-sm')}
-        >
-          {TYPE_OPTIONS.map((t) => <option key={t} value={t}>{t}</option>)}
-        </select>
-      </TableCell>
-      <TableCell><Input value={item.description} onChange={(e) => onItemUpdate(index, { description: e.target.value })} className={cn(commonInputStyles, 'min-w-64')} /></TableCell>
-      <TableCell><Input type='number' value={item.weight} onChange={(e) => onItemUpdate(index, { weight: Number(e.target.value) })} className={cn(commonInputStyles, 'w-24')} /></TableCell>
-    </TableRow>
   );
 }
 
@@ -120,92 +103,150 @@ export function AdminPlanPreviewTable({
   items,
   title,
   isSaving,
+  isDeleting = false,
+  eyebrow = 'Review Required',
+  heading = 'Schedule Calendar',
+  description = 'Edit the plan directly in calendar form. Weekdays are reading slots, Saturday is catch-up, and Sunday is implementation/documentation.',
+  saveLabel = 'Commit Plan',
   onTitleChange,
   onSave,
   onItemUpdate,
-  onMoveItem,
+  onDelete,
 }: {
   items: ScheduleDraftItem[];
   title: string;
   isSaving: boolean;
+  isDeleting?: boolean;
+  eyebrow?: string;
+  heading?: string;
+  description?: string;
+  saveLabel?: string;
   onTitleChange: (title: string) => void;
   onSave: () => void;
   onItemUpdate: (index: number, patch: Partial<ScheduleDraftItem>) => void;
-  onMoveItem: (index: number, direction: -1 | 1) => void;
+  onDelete?: () => void;
 }) {
   if (items.length === 0) {
     return (
-      <section className='border border-dashed border-border bg-secondary/10 p-8 text-center text-muted-foreground rounded-xl'>
+      <section className='rounded-xl border border-dashed border-border bg-secondary/10 p-8 text-center text-muted-foreground'>
         Generate a draft first. Nothing is saved automatically.
       </section>
     );
   }
 
+  const weeks = buildCalendarWeeks(items);
+  const commonInputStyles = 'rounded-none border-black/10 bg-[#faf7f1] focus-visible:ring-primary/20';
+
   return (
-    <section className='border border-black/10 bg-white p-4 shadow-[0_25px_70px_rgba(0,0,0,0.06)] rounded-xl sm:p-8'>
-      <div className='mb-8 flex flex-col justify-between gap-6 lg:flex-row lg:items-center'>
+    <section className='rounded-xl border border-black/10 bg-white p-4 shadow-[0_25px_70px_rgba(0,0,0,0.06)] sm:p-8'>
+      <div className='mb-8 flex flex-col justify-between gap-6 lg:flex-row lg:items-end'>
         <div>
-          <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-[#d9a517]'>Review Required</p>
-          <h3 className='mt-2 font-serif text-3xl text-black'>Schedule Preview</h3>
+          <p className='text-[10px] font-bold uppercase tracking-[0.3em] text-[#d9a517]'>{eyebrow}</p>
+          <h3 className='mt-2 font-serif text-3xl text-black'>{heading}</h3>
+          <p className='mt-3 max-w-2xl text-sm text-black/60'>
+            {description}
+          </p>
         </div>
         <div className='flex flex-col gap-4 sm:flex-row sm:items-end'>
           <div className='space-y-1.5'>
             <p className='text-[10px] font-bold uppercase tracking-widest text-black/40'>Internal Title</p>
-            <Input 
-              value={title} 
-              onChange={(e) => onTitleChange(e.target.value)} 
-              className='h-11 w-full rounded-none border-black/10 bg-[#faf7f1] lg:min-w-[240px]' 
+            <Input
+              value={title}
+              onChange={(e) => onTitleChange(e.target.value)}
+              className='h-11 w-full rounded-none border-black/10 bg-[#faf7f1] lg:min-w-[240px]'
             />
           </div>
-          <Button 
-            disabled={isSaving} 
-            className='h-11 w-full rounded-none bg-[#d9a517] px-8 font-bold uppercase tracking-widest text-white hover:bg-[#b88c12] sm:w-auto' 
+          {onDelete ? (
+            <Button
+              disabled={isSaving || isDeleting}
+              variant='outline'
+              className='h-11 w-full rounded-none border-red-200 bg-white px-8 font-bold uppercase tracking-widest text-red-600 hover:bg-red-50 hover:text-red-700 sm:w-auto'
+              onClick={() => void onDelete()}
+            >
+              {isDeleting ? <LoaderCircle className='mr-2 size-4 animate-spin' /> : null}
+              Delete Plan
+            </Button>
+          ) : null}
+          <Button
+            disabled={isSaving || isDeleting}
+            className='h-11 w-full rounded-none bg-[#d9a517] px-8 font-bold uppercase tracking-widest text-white hover:bg-[#b88c12] sm:w-auto'
             onClick={() => void onSave()}
           >
-            {isSaving ? <LoaderCircle className='size-4 animate-spin mr-2' /> : null}
-            Commit Plan
+            {isSaving ? <LoaderCircle className='mr-2 size-4 animate-spin' /> : null}
+            {saveLabel}
           </Button>
         </div>
       </div>
 
-      {/* Mobile View */}
-      <div className='lg:hidden border border-black/5 rounded-lg overflow-hidden'>
+      <div className='rounded-lg border border-black/5 lg:hidden'>
         {items.map((item, index) => (
-          <MobileScheduleCard 
-            key={`mobile-${item.date}-${index}`} 
-            item={item} 
-            index={index} 
-            onItemUpdate={onItemUpdate}
-            onMoveItem={onMoveItem}
-          />
+          <MobileScheduleCard key={`${item.date}-${index}`} item={item} index={index} onItemUpdate={onItemUpdate} />
         ))}
       </div>
 
-      {/* Desktop View */}
-      <div className='hidden lg:block overflow-hidden rounded-lg border border-black/5'>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Order</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Label</TableHead>
-              <TableHead>Type</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Weight</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {items.map((item, index) => (
-              <DesktopScheduleRow 
-                key={`desktop-${item.date}-${index}`} 
-                item={item} 
-                index={index} 
-                onItemUpdate={onItemUpdate}
-                onMoveItem={onMoveItem}
-              />
-            ))}
-          </TableBody>
-        </Table>
+      <div className='hidden overflow-hidden rounded-lg border border-black/5 lg:block'>
+        <div className='grid grid-cols-7 gap-px bg-black/5'>
+          {WEEKDAYS.map((day) => (
+            <div key={day} className='bg-[#faf7f1] px-4 py-3 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-black/40'>
+              {day}
+            </div>
+          ))}
+
+          {weeks.map((week, weekIndex) => (
+            <div key={weekIndex} className='contents'>
+              {week.map(({ date, item, itemIndex }) => (
+                <article
+                  key={date.toISOString()}
+                  className={cn('min-h-[300px] p-4', item ? 'bg-white' : 'bg-black/[0.02]')}
+                >
+                  <div className='mb-3 flex items-center justify-between gap-3'>
+                    <span className={cn('text-xs font-medium', item ? 'text-black' : 'text-black/25')}>
+                      {format(date, 'd')}
+                    </span>
+                    {item ? (
+                      <span className='text-[8px] font-bold uppercase tracking-[0.2em] text-[#d9a517]'>
+                        Day {item.dayIndex}
+                      </span>
+                    ) : null}
+                  </div>
+
+                  {item ? (
+                    <div className='space-y-3'>
+                      <Input
+                        value={item.label}
+                        onChange={(e) => onItemUpdate(itemIndex, { label: e.target.value })}
+                        className={cn(commonInputStyles, 'h-10 text-sm')}
+                      />
+                      <Textarea
+                        value={item.description}
+                        onChange={(e) => onItemUpdate(itemIndex, { description: e.target.value })}
+                        className={cn(commonInputStyles, 'min-h-[112px] text-xs leading-5')}
+                      />
+                      <select
+                        value={item.type}
+                        onChange={(e) => onItemUpdate(itemIndex, { type: e.target.value as ScheduleItemType })}
+                        className={cn(commonInputStyles, 'h-10 w-full px-3 text-sm')}
+                      >
+                        {TYPE_OPTIONS.map((type) => (
+                          <option key={type} value={type}>
+                            {type}
+                          </option>
+                        ))}
+                      </select>
+                      <Input
+                        type='number'
+                        step='0.25'
+                        value={item.weight}
+                        onChange={(e) => onItemUpdate(itemIndex, { weight: Number(e.target.value) })}
+                        className={cn(commonInputStyles, 'h-10')}
+                      />
+                    </div>
+                  ) : null}
+                </article>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
